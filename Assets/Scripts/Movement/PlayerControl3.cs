@@ -17,7 +17,9 @@ public class PlayerControl3 : MonoBehaviour
     [Header("Vertical Movement")]
     public float jumpSpeed = 15f;
     public float jumpDelay = 0.25f;
+    [Tooltip("When > 0 allows a new jump")]
     private float jumpTimer;
+    public bool jumpHold;
 
     [Header("Components")]
     public Rigidbody2D rb;
@@ -30,41 +32,55 @@ public class PlayerControl3 : MonoBehaviour
     public float linearDrag = 4f;
     public float gravity = 1f;
     public float fallMultiplier = 5f;
+    public float dragConstant = .9f;
 
     [Header("Collision")]
+    public bool wasOnGround = false;
     public bool onGround = false;
     public float groundLength = 0.6f;
-    public Vector3 colliderOffset;
+    public Vector3 colliderOffset = new Vector3(0.12f, 0, 0);
 
     // Update is called once per frame
     void Update()
     {
-        bool wasOnGround = onGround;
-        onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
+        CheckIfGrounded();
 
         if (!wasOnGround && onGround)
         {
             StartCoroutine(JumpSqueeze(1.25f, 0.8f, 0.05f));
         }
 
-        if (Input.GetButtonDown("Jump"))
+        // check if jump keys / buttons are pressed on this loop
+        if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpTimer = Time.time + jumpDelay;
         }
+
+        // check if jump keys / buttons are held down
+        jumpHold = Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow);
+
         //animator.SetBool("onGround", onGround);
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
     void FixedUpdate()
     {
-        moveCharacter(direction.x);
+        MoveCharacter(direction.x);
         if (jumpTimer > Time.time && onGround)
         {
             Jump();
         }
 
-        modifyPhysics();
+        ModifyPhysics();
     }
-    void moveCharacter(float horizontal)
+
+    void CheckIfGrounded()
+    {
+        wasOnGround = onGround;
+        onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) ||
+            Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
+    }
+
+    void MoveCharacter(float horizontal)
     {
         rb.AddForce(Vector2.right * horizontal * moveSpeed);
 
@@ -84,9 +100,11 @@ public class PlayerControl3 : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         jumpTimer = 0;
+        jumpHold = false;
+        onGround = false;
         StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
     }
-    void modifyPhysics()
+    void ModifyPhysics()
     {
         bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
 
@@ -94,28 +112,38 @@ public class PlayerControl3 : MonoBehaviour
         {
             if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
             {
-                rb.drag = linearDrag;
+                //rb.drag = linearDrag;
+                ApplyHorizontalDrag();
             }
-            else
-            {
-                rb.drag = 0f;
-            }
+            //else
+            //{
+            //    rb.drag = 0.1f;
+            //}
             rb.gravityScale = 0;
         }
         else
         {
+            // "better jump" 
             rb.gravityScale = gravity;
             rb.drag = linearDrag * 0.15f;
             if (rb.velocity.y < 0)
             {
                 rb.gravityScale = gravity * fallMultiplier;
             }
-            else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
+            else if (rb.velocity.y > 0 && !jumpHold)
             {
                 rb.gravityScale = gravity * (fallMultiplier / 2);
             }
         }
     }
+
+
+    private void ApplyHorizontalDrag()
+    {
+        rb.velocity = new Vector2(rb.velocity.x * Mathf.Clamp01(1 - dragConstant), rb.velocity.y);
+    }
+
+
     void Flip()
     {
         facingRight = !facingRight;
