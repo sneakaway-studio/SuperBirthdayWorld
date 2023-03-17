@@ -1,13 +1,9 @@
-
 using UnityEngine;
 using System.Collections;
 
-
 public class Float : MonoBehaviour
 {
-
-
-    // User Inputs
+    public bool floatingOn = false;
     public bool spin = false;
     public float degreesPerSecond = 15.0f;
     public float amplitude = 0.5f;
@@ -25,6 +21,8 @@ public class Float : MonoBehaviour
 
     void Update()
     {
+        if (!floatingOn) return;
+
         if (spin)
             // Spin object around Y-Axis
             transform.Rotate(new Vector3(0f, Time.deltaTime * degreesPerSecond, 0f), Space.World);

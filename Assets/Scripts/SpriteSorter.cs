@@ -20,7 +20,8 @@ public class SpriteSorter : MonoBehaviour
     public SortingLayer sortingLayer;
     public int sortingLayerID;
     public string sortingLayerName;
-    public int sortingOrder;
+    public int sortingOrderStart = 1;
+    public int sortingOrderStep = 1;
     [Tooltip("Set this option to make the first in hierarchy the topmost visually")]
     public bool reverseChildSortOrder;
 
@@ -100,12 +101,12 @@ public class SpriteSorter : MonoBehaviour
         // if an override is set
         if (orderOverride != 0)
         {
-            sortingOrder = orderOverride;
+            sortingOrderStart = orderOverride;
         }
         else if (spriteRenderer != null)
         {
             // set order to same as parent
-            sortingOrder = spriteRenderer.sortingOrder;
+            sortingOrderStart = spriteRenderer.sortingOrder;
         }
     }
 
@@ -131,7 +132,7 @@ public class SpriteSorter : MonoBehaviour
         if (reverseChildSortOrder)
             System.Array.Reverse(childSpriteRenderers);
 
-        int index = sortingOrder | 0;
+        int index = sortingOrderStart | 0;
         // update sorting layer
         foreach (SpriteRenderer sr in childSpriteRenderers)
         {
@@ -155,7 +156,8 @@ public class SpriteSorter : MonoBehaviour
 
             sr.sortingLayerID = sortingLayerID;
             sr.sortingLayerName = sortingLayerName;
-            sr.sortingOrder = ++index;
+            index += sortingOrderStep;
+            sr.sortingOrder = index;
 
             // update while in this loop instead of calling secondary loop
             if (index > highest) highest = index;

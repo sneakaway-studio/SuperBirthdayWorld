@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -51,7 +51,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -61,7 +61,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
+  ignorePngGamma: 1
   applyGammaDecoding: 0
   cookieLightType: 0
   platformSettings:
@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
@@ -120,10 +120,10 @@ TextureImporter:
       name: Bot_Wheels_0
       rect:
         serializedVersion: 2
-        x: 52
-        y: 326
-        width: 40
-        height: 138
+        x: 21
+        y: 570
+        width: 207
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: Bot_Wheels_1
       rect:
         serializedVersion: 2
-        x: 117
-        y: 326
-        width: 41
-        height: 138
+        x: 279
+        y: 570
+        width: 208
+        height: 454
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,34 +159,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bot_Wheels_2
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 327
-        width: 42
-        height: 137
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e86dbe5505ed48b3a961c48dd0dc400
-      internalID: 835009223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Bot_Wheels_3
       rect:
         serializedVersion: 2
-        x: 248
-        y: 331
-        width: 40
-        height: 133
+        x: 799
+        y: 598
+        width: 202
+        height: 426
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +183,10 @@ TextureImporter:
       name: Bot_Wheels_4
       rect:
         serializedVersion: 2
-        x: 48
-        y: 131
-        width: 46
-        height: 129
+        x: 12
+        y: 6
+        width: 251
+        height: 542
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,13 +201,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bot_Wheels_5
+      name: Bot_Wheels_2
       rect:
         serializedVersion: 2
-        x: 200
-        y: 131
-        width: 68
-        height: 141
+        x: 533
+        y: 574
+        width: 204
+        height: 450
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,7 +215,28 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42452169b8c6a40e1abf4a5ba9622b40
+      spriteID: 16c4a3b1d7448489299ced989b184193
+      internalID: 835009223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bot_Wheels_5
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 7
+        width: 249
+        height: 411
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 764eb9109ff86400194fc37339cb9558
       internalID: 935517904
       vertices: []
       indices: 
@@ -246,10 +246,10 @@ TextureImporter:
       name: Bot_Wheels_6
       rect:
         serializedVersion: 2
-        x: 287
-        y: 131
-        width: 65
-        height: 106
+        x: 556
+        y: 404
+        width: 457
+        height: 157
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,7 +257,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ba82056cccfa4ed99544d991274d714
+      spriteID: 6cbf032bb0be34487a09b0b67ed286d4
       internalID: 2078012950
       vertices: []
       indices: 
@@ -267,10 +267,10 @@ TextureImporter:
       name: Bot_Wheels_7
       rect:
         serializedVersion: 2
-        x: 368
-        y: 131
-        width: 66
-        height: 76
+        x: 568
+        y: 6
+        width: 252
+        height: 293
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,7 +278,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d32b2f77bc17467d87a71ae81bb7679
+      spriteID: e1f10fa9291cc40c08061538fb41226c
       internalID: -1747654148
       vertices: []
       indices: 

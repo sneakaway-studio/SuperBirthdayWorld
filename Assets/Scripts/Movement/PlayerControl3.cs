@@ -15,7 +15,7 @@ public class PlayerControl3 : MonoBehaviour
     private bool facingRight = true;
 
     [Header("Vertical Movement")]
-    public float jumpSpeed = 15f;
+    public float jumpSpeed = 10f;
     public float jumpDelay = 0.25f;
     [Tooltip("When > 0 allows a new jump")]
     private float jumpTimer;
@@ -40,35 +40,41 @@ public class PlayerControl3 : MonoBehaviour
     public float groundLength = 0.6f;
     public Vector3 colliderOffset = new Vector3(0.12f, 0, 0);
 
+
+    public Vector2 lastVelocity;
+
     // Update is called once per frame
     void Update()
     {
         CheckIfGrounded();
 
+        // player just landed
         if (!wasOnGround && onGround)
-        {
+            // play land animation
             StartCoroutine(JumpSqueeze(1.25f, 0.8f, 0.05f));
-        }
 
-        // check if jump keys / buttons are pressed on this loop
+        // check if jump key / button is pressed on this loop
         if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.UpArrow))
-        {
             jumpTimer = Time.time + jumpDelay;
-        }
 
-        // check if jump keys / buttons are held down
+        // check if jump key / button is held down
         jumpHold = Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow);
 
         //animator.SetBool("onGround", onGround);
-        direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+
+        Flip();
     }
+
     void FixedUpdate()
     {
-        MoveCharacter(direction.x);
-        if (jumpTimer > Time.time && onGround)
-        {
-            Jump();
-        }
+        // get last velocity
+        lastVelocity = rb.velocity;
+
+        Move(direction.x);
+
+        // add jump action
+        if (jumpTimer > Time.time && onGround) Jump();
 
         ModifyPhysics();
     }
@@ -80,21 +86,26 @@ public class PlayerControl3 : MonoBehaviour
             Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
     }
 
-    void MoveCharacter(float horizontal)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.AddForce(Vector2.right * horizontal * moveSpeed);
+        // if landed on ground
+        if (collision.transform.tag == "Ground")
+            // and was just falling
+            if (lastVelocity.y < -5)
+                // preserve momentum on impact
+                rb.velocity = new Vector2(lastVelocity.x, rb.velocity.y);
+    }
 
-        if ((horizontal > 0 && !facingRight) || (horizontal < 0 && facingRight))
-        {
-            Flip();
-        }
-        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
-        {
-            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
-        }
+    void Move(float dir)
+    {
+        Vector3 v0 = Vector3.zero;
+        Vector2 targetVelocity = new Vector2(dir * maxSpeed, rb.velocity.y);
+        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref v0, 0.02f);
+
         //animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
         //animator.SetFloat("vertical", rb.velocity.y);
     }
+
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -102,8 +113,11 @@ public class PlayerControl3 : MonoBehaviour
         jumpTimer = 0;
         jumpHold = false;
         onGround = false;
+
+        // play jump animation
         StartCoroutine(JumpSqueeze(0.5f, 1.2f, 0.1f));
     }
+
     void ModifyPhysics()
     {
         bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
@@ -112,13 +126,12 @@ public class PlayerControl3 : MonoBehaviour
         {
             if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
             {
-                //rb.drag = linearDrag;
-                ApplyHorizontalDrag();
+                rb.drag = linearDrag;
             }
-            //else
-            //{
-            //    rb.drag = 0.1f;
-            //}
+            else
+            {
+                rb.drag = 0.1f;
+            }
             rb.gravityScale = 0;
         }
         else
@@ -137,18 +150,15 @@ public class PlayerControl3 : MonoBehaviour
         }
     }
 
-
-    private void ApplyHorizontalDrag()
-    {
-        rb.velocity = new Vector2(rb.velocity.x * Mathf.Clamp01(1 - dragConstant), rb.velocity.y);
-    }
-
-
     void Flip()
     {
-        facingRight = !facingRight;
-        transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
+        if ((rb.velocity.x > 0 && !facingRight) || (rb.velocity.x < 0 && facingRight))
+        {
+            facingRight = !facingRight;
+            transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
+        }
     }
+
     IEnumerator JumpSqueeze(float xSqueeze, float ySqueeze, float seconds)
     {
         Vector3 originalSize = Vector3.one;
@@ -167,8 +177,8 @@ public class PlayerControl3 : MonoBehaviour
             characterHolder.transform.localScale = Vector3.Lerp(newSize, originalSize, t);
             yield return null;
         }
-
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

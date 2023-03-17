@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -61,7 +61,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  ignorePngGamma: 0
+  ignorePngGamma: 1
   applyGammaDecoding: 0
   cookieLightType: 0
   platformSettings:
@@ -69,7 +69,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
@@ -120,10 +120,10 @@ TextureImporter:
       name: Bot_Eyes_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 424
-        width: 102
-        height: 32
+        x: 23
+        y: 822
+        width: 549
+        height: 176
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: Bot_Eyes_1
       rect:
         serializedVersion: 2
-        x: 197
-        y: 424
-        width: 102
-        height: 32
+        x: 23
+        y: 587
+        width: 549
+        height: 175
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +162,10 @@ TextureImporter:
       name: Bot_Eyes_2
       rect:
         serializedVersion: 2
-        x: 53
-        y: 324
-        width: 45
-        height: 44
+        x: 35
+        y: 312
+        width: 240
+        height: 240
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,10 +183,10 @@ TextureImporter:
       name: Bot_Eyes_3
       rect:
         serializedVersion: 2
-        x: 131
-        y: 324
-        width: 45
-        height: 44
+        x: 329
+        y: 312
+        width: 240
+        height: 240
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,10 +204,10 @@ TextureImporter:
       name: Bot_Eyes_4
       rect:
         serializedVersion: 2
-        x: 209
-        y: 324
-        width: 45
-        height: 44
+        x: 616
+        y: 298
+        width: 266
+        height: 254
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,10 +225,10 @@ TextureImporter:
       name: Bot_Eyes_5
       rect:
         serializedVersion: 2
-        x: 285
-        y: 328
-        width: 43
-        height: 40
+        x: 36
+        y: 36
+        width: 239
+        height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,10 +246,10 @@ TextureImporter:
       name: Bot_Eyes_6
       rect:
         serializedVersion: 2
-        x: 97
-        y: 270
-        width: 21
-        height: 20
+        x: 329
+        y: 133
+        width: 240
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -259,174 +259,6 @@ TextureImporter:
       bones: []
       spriteID: 7df79ec2c335745e4bce4f86285291a5
       internalID: 229299665
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_7
-      rect:
-        serializedVersion: 2
-        x: 131
-        y: 258
-        width: 45
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 016f6f7260f954fd991b1c44dfcd5d53
-      internalID: -259000346
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_8
-      rect:
-        serializedVersion: 2
-        x: 211
-        y: 288
-        width: 41
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 98a2d996e4e0c4b2fbae3c32eb802a1b
-      internalID: 2103633534
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_9
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 272
-        width: 45
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13f4be368d1944687ba8b476a2a99c7b
-      internalID: -1946418188
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_10
-      rect:
-        serializedVersion: 2
-        x: 363
-        y: 258
-        width: 45
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63a9198e1966c4d0bbad049b8857674d
-      internalID: 426904816
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_11
-      rect:
-        serializedVersion: 2
-        x: 71
-        y: 278
-        width: 9
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9d7e7b0bf53d40f180df693cfdbc599
-      internalID: 51913133
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_12
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 198
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d52cf1e4e23df43a5b0d3417634724b4
-      internalID: 104747696
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_13
-      rect:
-        serializedVersion: 2
-        x: 98
-        y: 192
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7de49cd88c7114731a88046756d69b21
-      internalID: -326980789
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bot_Eyes_14
-      rect:
-        serializedVersion: 2
-        x: 130
-        y: 180
-        width: 46
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed1f7eee1eefc4d5abe7b3185f28a39f
-      internalID: -1167776456
       vertices: []
       indices: 
       edges: []
@@ -442,21 +274,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Bot_Eyes_12: 104747696
       Bot_Eyes_1: 724545530
       Bot_Eyes_3: -413143597
       Bot_Eyes_0: 1324359697
       Bot_Eyes_4: -1253185241
       Bot_Eyes_6: 229299665
-      Bot_Eyes_7: -259000346
-      Bot_Eyes_14: -1167776456
-      Bot_Eyes_11: 51913133
       Bot_Eyes_2: -422154125
-      Bot_Eyes_8: 2103633534
       Bot_Eyes_5: -525426495
-      Bot_Eyes_13: -326980789
-      Bot_Eyes_10: 426904816
-      Bot_Eyes_9: -1946418188
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
