@@ -41,23 +41,18 @@ public class Platform_Moving : MonoBehaviour
      */
     void FixedUpdate()
     {
-        if (_switch == false)
-        {
+        // determine direction
+        if (!_switch)
             platform.position = Vector3.MoveTowards(platform.position, start.position, _speed * Time.deltaTime);
-        }
-        else if (_switch == true)
-        {
+        else
             platform.position = Vector3.MoveTowards(platform.position, end.position, _speed * Time.deltaTime);
-        }
 
+        // check that it reached the start || end position
         if (platform.position == start.position)
-        {
             _switch = true;
-        }
         else if (platform.position == end.position)
-        {
             _switch = false;
-        }
+
     }
 
     /**

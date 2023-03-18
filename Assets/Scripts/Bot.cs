@@ -15,9 +15,9 @@ public class Bot : MonoBehaviour
     public Vector3 wheelHide = new Vector3(0, 0, 0);
     public Vector3 wheelShow;
 
-    public Float botFloat;
-    public Float bodyFloat;
-    AudioSource audioSource;
+    public Move_Float botFloat;
+    public Move_Float bodyFloat;
+    [SerializeField] private AudioSource audioSource;
 
 
     private void OnValidate()
@@ -28,8 +28,8 @@ public class Bot : MonoBehaviour
         wheel = transform.Find("Wheel").transform;
         wheelShow = wheel.localPosition;
         // there are just two floats
-        botFloat = GetComponent<Float>();
-        bodyFloat = transform.Find("BotRig").GetComponent<Float>();
+        botFloat = GetComponent<Move_Float>();
+        bodyFloat = transform.Find("BotRig").GetComponent<Move_Float>();
     }
 
     void Awake()

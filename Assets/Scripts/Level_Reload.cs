@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Level_Reload : MonoBehaviour
 {
 
-    BoxCollider2D boxCollider2D;
+    [SerializeField] BoxCollider2D boxCollider2D;
 
     void OnValidate()
     {
