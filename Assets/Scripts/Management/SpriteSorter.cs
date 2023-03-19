@@ -16,6 +16,8 @@ public class SpriteSorter : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
 
+    public bool freezeThisBackground = false;
+
     [Header("Defaults")]
     public SortingLayer sortingLayer;
     public int sortingLayerID;
@@ -67,6 +69,7 @@ public class SpriteSorter : MonoBehaviour
 
     public void SaveAndSort()
     {
+        if (freezeThisBackground) return;
         // update sorting layer / order
         SaveDefaultChildSortingLayer();
         SaveDefaultChildSortingOrder();
