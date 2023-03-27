@@ -19,6 +19,8 @@ public class Bot : MonoBehaviour
     public Move_Float bodyFloat;
     [SerializeField] private AudioSource audioSource;
 
+    public GameObject radioWavesAnimation;
+
 
     private void OnValidate()
     {
@@ -43,6 +45,11 @@ public class Bot : MonoBehaviour
         {
             Trigger(false);
         }
+
+        if (audioSource.isPlaying)
+            radioWavesAnimation.SetActive(true);
+        else
+            radioWavesAnimation.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -122,6 +129,7 @@ public class Bot : MonoBehaviour
             audioSource.Play(0);
             //audioSource.UnPause();
             Debug.Log("Play: " + audioSource.time);
+            radioWavesAnimation.SetActive(true);
         }
         //else
         //{

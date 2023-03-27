@@ -42,11 +42,17 @@ TagManager:
   - name: Background
     uniqueID: 1486229431
     locked: 0
+  - name: Wallpaper
+    uniqueID: 3893766635
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Platforms
     uniqueID: 3075561693
+    locked: 0
+  - name: Doors
+    uniqueID: 2865159547
     locked: 0
   - name: Bots
     uniqueID: 955666743

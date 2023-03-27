@@ -11,23 +11,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Tooltip("Prev/Current/Next)")]
-    public SceneFunctions.Indexer sceneIndex;
 
-    public List<string> sceneList = new List<string>();
-
-    private void OnValidate()
-    {
-        SceneFunctions.LogActiveScene();
-
-        // always update sceneIndex
-        sceneIndex = new SceneFunctions.Indexer(sceneList.Count);
-
-        // always update in SceneFunctions
-        SceneFunctions.sceneIndex = sceneIndex;
-        SceneFunctions.sceneList = sceneList;
-
-    }
 
     private void Awake()
     {
