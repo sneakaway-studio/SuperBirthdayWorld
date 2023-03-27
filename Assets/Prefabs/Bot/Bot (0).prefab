@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2781960369430695351}
   m_Layer: 6
   m_Name: Bot (0)
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ AudioSource:
   m_GameObject: {fileID: 3628052911112052198}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -49763017310049364, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
   m_audioClip: {fileID: 8300000, guid: eb34e796bd9f64746a03e63a824b53f4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
