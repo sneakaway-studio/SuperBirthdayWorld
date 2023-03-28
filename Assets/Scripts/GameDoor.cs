@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class GameDoor : MonoBehaviour
 {
-    public bool enabled;
+    public SpriteRenderer door;
+    public bool doorEnabled;
+    public Color enabledColor = new Color(Color.green.r, Color.green.g, Color.green.b, .5f);
+    public Color disabledColor = new Color(Color.magenta.r, Color.magenta.g, Color.magenta.b, .5f);
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        if (door == null) door = transform.Find("Door").GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (doorEnabled)
+            door.color = enabledColor;
+        else
+            door.color = disabledColor;
 
     }
 }

@@ -27,11 +27,10 @@ public class EasyScene_Scene : MonoBehaviour
     [Tooltip("Whether to start the game from scratch on play (Editor)")]
     public string loadInitSceneOnPlay;
 
+    // Editor only function
     void OnValidate()
     {
-        managerSceneLoaded = EasyScene_Static.IsSceneLoaded("ManagerScene");
-
-        // only run in edit mode
+        // Only run in editor, and only in edit mode
         if (Application.isPlaying) return;
 
         //if (!managerSceneLoaded)
@@ -45,7 +44,8 @@ public class EasyScene_Scene : MonoBehaviour
 
     void GetSceneData()
     {
-        // save data about this scene
+        // get data about this scene
+        managerSceneLoaded = EasyScene_Static.IsSceneLoaded("ManagerScene");
         sceneName = gameObject.scene.name;
         sceneBuildIndex = gameObject.scene.buildIndex;
     }

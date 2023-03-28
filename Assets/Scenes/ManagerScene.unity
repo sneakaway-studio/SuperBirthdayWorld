@@ -421,14 +421,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeScene:
-    m_Handle: -402832
-  activeSceneName: Scene-0-0
-  activeSceneIndex: 2
+    m_Handle: -170698
+  activeSceneName: Scene-1-1
+  activeSceneIndex: 3
   activeSceneLoaded: 1
-  count: 5
-  prev: 1
-  current: 2
-  next: 3
+  count: 6
+  prev: 2
+  current: 3
+  next: 4
+  sceneList: []
+  sceneDebugger: {fileID: 538496649}
 --- !u!1 &1054176111
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,10 +641,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1418580433}
+  masterMixer: {fileID: 24100000, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
   botAudioSource: {fileID: 0}
-  fadeRate: 0.003
-  volumeFaded: 0.3
-  volumeNormal: 1
+  musicUp: {fileID: 24500006, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
+  musicDown: {fileID: -1827443362714737086, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
+  fadeRate: 0.01
 --- !u!1 &1790876485
 GameObject:
   m_ObjectHideFlags: 0

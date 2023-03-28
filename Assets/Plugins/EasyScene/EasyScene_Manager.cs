@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using TMPro;
 
 public class EasyScene_Manager : MonoBehaviour
 {
@@ -21,8 +22,11 @@ public class EasyScene_Manager : MonoBehaviour
     public int next;
 
 
-    //[SerializeField]
-    //public EasyScene_Indexer sceneIndex;
+    [SerializeField]
+    public List<string> sceneList;
+
+
+    public TMP_Text sceneDebugger;
 
     ////////////////////////////////////////////////////// 
     ///////////////////// LISTENERS //////////////////////
@@ -36,6 +40,13 @@ public class EasyScene_Manager : MonoBehaviour
         EasyScene_Indexer.Reset(EasyScene_Data.SceneList.names.Count);
         UpdateDataAfterSceneLoad();
     }
+
+    private void Update()
+    {
+        sceneList = EasyScene_Data.SceneList.names;
+        sceneDebugger.text = $"prev={sceneList[prev]} ({prev}) | current={sceneList[current]} ({current}) | next={sceneList[next]} ({next})";
+    }
+
 
 
     // OnEnable / OnDisable listeners
@@ -68,6 +79,10 @@ public class EasyScene_Manager : MonoBehaviour
         // unload the previously active scene (method includes checks)
         await EasyScene_Static.UnloadSceneAsync(previousActive.name);
 
+        await Task.Delay(10);
+
+        UpdateDataAfterSceneLoad();
+        await Task.Delay(10);
         UpdateDataAfterSceneLoad();
     }
 
@@ -96,6 +111,9 @@ public class EasyScene_Manager : MonoBehaviour
         prev = EasyScene_Indexer.prev;
         current = EasyScene_Indexer.current;
         next = EasyScene_Indexer.next;
+
+        Debug.Log($"UpdateDataAfterSceneLoad() current='{current}', activeSceneName={activeSceneName}");
+
     }
 
 

@@ -17,11 +17,18 @@ public class EasyScene_Data
     public static EasyScene_SceneList SceneList
     {
         get
-        {   // if it doesn't exist then save the json file
-            if (_sceneList == null)
+        {   // try JSON first
+            //if (_sceneList == null || _sceneList.names.Count <= 0)
+            //{
+            //    _sceneList = GetFromJson();
+            //    Debug.Log($"EasyScene_Data.SceneList.names[2] = {_sceneList.names[2]}");
+            //}
+            //if it doesn't exist then save the json file
+            if (_sceneList == null || _sceneList.names.Count <= 0)
             {
-                SaveToJson();
-                _sceneList = GetFromJson();
+                _sceneList = new EasyScene_SceneList();
+                _sceneList.names = GetScenesInBuild();
+                Debug.Log($"EasyScene_Data.SceneList.names[2] = {_sceneList.names[2]}");
             }
             return _sceneList;
         }
@@ -57,6 +64,7 @@ public class EasyScene_Data
     private static EasyScene_SceneList GetFromJson()
     {
         string str = System.IO.File.ReadAllText(filePath);
+        Debug.Log(str);
         return JsonUtility.FromJson<EasyScene_SceneList>(str);
     }
 
@@ -65,7 +73,7 @@ public class EasyScene_Data
     /// <returns>-1 if not found</returns>
     public static int GetSceneIndexFromName(string _name)
     {
-        return _sceneList.names.IndexOf(_name);
+        return SceneList.names.IndexOf(_name);
     }
 
     /// <summary>Get the name of a scene in the build list</summary>
@@ -73,7 +81,7 @@ public class EasyScene_Data
     /// <returns>"" if not found</returns>
     public static string GetSceneNameFromIndex(int _index)
     {
-        return _sceneList.names[_index];
+        return SceneList.names[_index];
     }
 }
 

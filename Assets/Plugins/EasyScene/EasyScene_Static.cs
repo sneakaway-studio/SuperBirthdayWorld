@@ -50,6 +50,7 @@ public static class EasyScene_Static
     /// <summary>Load next scene</summary>
     public static async void LoadNextScene()
     {
+        Debug.Log($"EasyScene_Static.LoadNextScene() index={EasyScene_Indexer.next} name={EasyScene_Data.GetSceneNameFromIndex(EasyScene_Indexer.next)}");
         await LoadSceneAsync(_name: EasyScene_Data.GetSceneNameFromIndex(EasyScene_Indexer.next), _additive: true);
     }
     /// <summary>Load first scene</summary>

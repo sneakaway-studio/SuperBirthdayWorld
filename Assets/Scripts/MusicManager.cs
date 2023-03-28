@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MusicManager : MonoBehaviour
 {
 
     public AudioSource audioSource;
-
+    public AudioMixer masterMixer;
     public AudioSource botAudioSource;
 
 
+    public AudioMixerSnapshot musicUp;
+    public AudioMixerSnapshot musicDown;
+
     public float fadeRate = .1f;
-    public float volumeFaded = -20f;
-    public float volumeNormal = 1f;
+    //public float volumeFaded = -20f;
+    //public float volumeNormal = 1f;
 
     private void Awake()
     {
@@ -34,13 +38,19 @@ public class MusicManager : MonoBehaviour
 
     void FadeIn()
     {
-        if (audioSource.volume < volumeNormal)
-            audioSource.volume += fadeRate;
+        musicUp.TransitionTo(.1f);
+
+
+        //if (audioSource.volume < volumeNormal)
+        //    audioSource.volume += fadeRate;
     }
     void FadeOut()
     {
-        if (audioSource.volume > volumeFaded)
-            audioSource.volume -= fadeRate;
+
+        musicDown.TransitionTo(.1f);
+
+        //if (audioSource.volume > volumeFaded)
+        //    audioSource.volume -= fadeRate;
     }
 
 }

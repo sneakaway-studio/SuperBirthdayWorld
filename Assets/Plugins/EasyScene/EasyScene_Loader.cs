@@ -12,7 +12,7 @@ public class EasyScene_Loader : MonoBehaviour
 
     [SerializeField] string sceneName;
     [SerializeField] bool loadAsAdditive = true;
-    [SerializeField] bool triggered;
+    [SerializeField] bool triggered = false;
 
     async void Load(OnEvent _onEvent)
     {
