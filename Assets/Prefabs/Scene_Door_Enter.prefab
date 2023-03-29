@@ -290,11 +290,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657352526107877264}
-  - component: {fileID: 4387104569144259032}
+  - component: {fileID: 640300062000978374}
   - component: {fileID: 1394782567710865062}
   - component: {fileID: 8311733392449739996}
   m_Layer: 0
-  m_Name: EasyScene_Door_Enter
+  m_Name: Scene_Door_Enter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4387104569144259032
+--- !u!114 &640300062000978374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,13 +325,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8912690730970498185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f7ced5a45e64b6bb11ca27bbc5a649, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bd31e165498749eabbefec8da424bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onEvent: 4
   sceneToLoad: 0
   sceneName: 
-  loadAsAdditive: 1
   triggered: 0
 --- !u!114 &1394782567710865062
 MonoBehaviour:

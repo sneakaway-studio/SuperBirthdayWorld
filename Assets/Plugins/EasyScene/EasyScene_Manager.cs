@@ -49,19 +49,19 @@ public class EasyScene_Manager : MonoBehaviour
 
 
 
-    // OnEnable / OnDisable listeners
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
-    }
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.activeSceneChanged -= OnActiveSceneChanged;
-        SceneManager.sceneUnloaded -= OnSceneUnloaded;
-    }
+    //// OnEnable / OnDisable listeners
+    //private void OnEnable()
+    //{
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //    SceneManager.activeSceneChanged += OnActiveSceneChanged;
+    //    SceneManager.sceneUnloaded += OnSceneUnloaded;
+    //}
+    //private void OnDisable()
+    //{
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //    SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+    //    SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    //}
 
     /// <summary>When any scene has loaded (notified using delegate)</summary>
     void OnSceneLoaded(Scene newScene, LoadSceneMode mode)

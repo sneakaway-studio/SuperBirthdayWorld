@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3397558594154620038}
   - component: {fileID: 3397558594154620033}
   - component: {fileID: 3397558594154620035}
-  - component: {fileID: 2048648287230509554}
+  - component: {fileID: 3369705515371841135}
   m_Layer: 0
-  m_Name: EasyScene_Reload
+  m_Name: Scene_Reload
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3397558594154620034}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.405359}
   m_EdgeRadius: 0
---- !u!114 &2048648287230509554
+--- !u!114 &3369705515371841135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,11 +121,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3397558594154620034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f7ced5a45e64b6bb11ca27bbc5a649, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bd31e165498749eabbefec8da424bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadSceneOn: 4
+  onEvent: 4
   sceneToLoad: 1
   sceneName: 
-  loadAsAdditive: 1
   triggered: 0
