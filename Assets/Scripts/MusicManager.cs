@@ -10,7 +10,8 @@ public class MusicManager : MonoBehaviour
     public AudioMixer masterMixer;
     public AudioSource botAudioSource;
 
-
+    // https://www.kodeco.com/532-audio-tutorial-for-unity-the-audio-mixer
+    // https://blog.studica.com/how-to-use-audio-mixers-in-unity-guide
     public AudioMixerSnapshot musicUp;
     public AudioMixerSnapshot musicDown;
 
