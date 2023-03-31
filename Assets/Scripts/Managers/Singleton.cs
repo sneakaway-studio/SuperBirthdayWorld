@@ -4,6 +4,7 @@ using UnityEngine;
 
 /**
  *  Singleton (and children "Service Locator pattern)
+ *  2023 Owen Mundy 
  *  References
  *  https://gamedevbeginner.com/singletons-in-unity-the-right-way/
  *  https://gamedev.stackexchange.com/a/116019/60431

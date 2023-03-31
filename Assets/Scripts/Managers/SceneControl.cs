@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+/**
+ *  Scene functions
+ *  2023 Owen Mundy 
+ */
+
 public class SceneControl : MonoBehaviour
 {
     [Header("Scene Data")]
@@ -100,7 +105,7 @@ public class SceneControl : MonoBehaviour
     /// <summary>When the active scene has changed (after OnSceneLoaded) (called from delegate)</summary>
     void OnActiveSceneChanged(Scene previousActive, Scene newActive)
     {
-        Debug.Log($"^^^ 1 ^^^ OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
+        Debug.Log($"@@@ OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
         UpdateActiveSceneData();
     }
 

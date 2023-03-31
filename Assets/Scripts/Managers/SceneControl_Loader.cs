@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ *  Generic scene loader to load scene on (awake, collision, etc.) event
+ *  2023 Owen Mundy
+ */
+
 public class SceneControl_Loader : MonoBehaviour
 {
     public enum OnEvent { Awake, Enable, Start, Collision, Trigger, Time };
