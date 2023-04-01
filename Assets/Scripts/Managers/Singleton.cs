@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// NOT TECHNICALLY USING THIS SCRIPT SINCE I INCORPORATED SINGLETON INTO SCENECONTROL. KEEPING FOR REFERENCE.
+
 /**
  *  Singleton (and children "Service Locator pattern)
  *  2023 Owen Mundy 
@@ -17,8 +19,7 @@ public class Singleton : MonoBehaviour
     public bool created = false;
 
     // References to others ("Service Locator" pattern)
-    public SceneControl SceneControl { get; set; } // non-private set
-    public MusicManager MusicManager { get; set; }
+    public MusicManager MusicManager { get; set; } // non-private set
     //public UIManager UIManager { get; private set; }
 
     private void Awake()
@@ -43,8 +44,8 @@ public class Singleton : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // store references
-        SceneControl = GetComponent<SceneControl>();
         MusicManager = GetComponentInChildren<MusicManager>();
         //UIManager = GetComponentInChildren<UIManager>();
     }
+
 }

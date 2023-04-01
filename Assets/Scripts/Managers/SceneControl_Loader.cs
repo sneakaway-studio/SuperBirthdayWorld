@@ -28,22 +28,22 @@ public class SceneControl_Loader : MonoBehaviour
         switch (sceneToLoad)
         {
             case LoadScene.previous:
-                Singleton.Instance.SceneControl.LoadPreviousScene();
+                SceneControl.Instance.LoadPreviousScene();
                 break;
             case LoadScene.current:
-                Singleton.Instance.SceneControl.LoadCurrentScene();
+                SceneControl.Instance.LoadCurrentScene();
                 break;
             case LoadScene.next:
-                Singleton.Instance.SceneControl.LoadNextScene();
+                SceneControl.Instance.LoadNextScene();
                 break;
             case LoadScene.first:
-                Singleton.Instance.SceneControl.LoadFirstScene();
+                SceneControl.Instance.LoadFirstScene();
                 break;
             case LoadScene.last:
-                Singleton.Instance.SceneControl.LoadLastScene();
+                SceneControl.Instance.LoadLastScene();
                 break;
             case LoadScene.name:
-                if (sceneName != "") Singleton.Instance.SceneControl.LoadScene(sceneName);
+                if (sceneName != "") SceneControl.Instance.LoadScene(sceneName);
                 break;
         }
     }

@@ -5,12 +5,26 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 /**
- *  Scene functions
+ *  SceneControl ("Singleton" + "Service Locator" patterns)
  *  2023 Owen Mundy 
+ *  References
+ *  https://gamedevbeginner.com/singletons-in-unity-the-right-way/
+ *  https://gamedev.stackexchange.com/a/116019/60431
  */
 
 public class SceneControl : MonoBehaviour
 {
+    // Singleton is accessible (public static)
+    public static SceneControl Instance { get; private set; }
+    public bool created = false;
+
+
+    [Header("Spawn Points")]
+
+    public Transform player;
+    public Transform enterPoint;
+    public Transform exitPoint;
+
     [Header("Scene Data")]
 
     [Tooltip("Number of scenes in the build")]
@@ -23,39 +37,100 @@ public class SceneControl : MonoBehaviour
     [Header("Current Scene")]
 
     [Tooltip("Active scene")]
-    public Scene activeScene;
+    Scene activeScene;
+    [Tooltip("Active scene index")]
+    public bool activeSceneLoaded;
     [Tooltip("Active scene name")]
     public string activeSceneName;
     [Tooltip("Active scene index")]
     public int activeSceneIndex;
-    [Tooltip("Active scene index")]
-    public bool activeSceneLoaded;
+
+
+    [Tooltip("Previous scene")]
+    public int previousSceneIndex;
 
 
     [Tooltip("Index of prev / current / next scenes")]
     public TMP_Text sceneDebugText;
 
 
+    // References to others ("Service Locator" pattern)
+    public MusicManager MusicManager { get; set; } // non-private set
+    //public UIManager UIManager { get; private set; }
 
     private void Awake()
     {
-        if (sceneList == null || sceneList.Count < 1) InitSceneControl();
-        UpdateActiveSceneData();
+        // *** SINGLETON *** 
+        if (SceneControl.Instance != null && SceneControl.Instance.created)
+        {
+            Debug.Log("Another SceneControl already exists!!!!");
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
+            DestroyImmediate(this.gameObject);
+            return;
+        }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+        created = true;
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+
+        // *** SERVICE LOCATOR *** 
+        // store references
+        MusicManager = GetComponentInChildren<MusicManager>();
+        //UIManager = GetComponentInChildren<UIManager>();
+
+        // on first awake
+        if (sceneList == null || sceneList.Count < 1) CreateSceneList();
+
     }
 
-    void InitSceneControl()
+    void CreateSceneList()
     {
-        Debug.Log($"^^^ 0 ^^^ SceneControl.InitSceneControl()");
+        Debug.Log($"^^^ 0 ^^^ SceneControl.CreateSceneList()");
         // if the sceneList has not been created
         sceneCount = SceneManager.sceneCountInBuildSettings;
         indexer = new SceneControl_Indexer();
         indexer.Reset(sceneCount);
         sceneList = GetScenesInBuild();
+        UpdateActiveSceneData();
+    }
+
+    /// <summary>When the active scene has changed (after OnSceneLoaded) (called from delegate)</summary>
+    void OnActiveSceneChanged(Scene previousActive, Scene newActive)
+    {
+        previousSceneIndex = previousActive.buildIndex;
+        Debug.Log($"^^^ 2 ^^^  OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
+
+        UpdateActiveSceneData();
+
+        // update player references
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        enterPoint = GameObject.Find("EnterPoint").transform;
+        exitPoint = GameObject.Find("ExitPoint").transform;
+        // move the player into the correct position        
+        if (previousSceneIndex <= activeSceneIndex)
+        {
+            player.position = enterPoint.position;
+        }
+        else
+        {
+            player.position = exitPoint.position;
+            // face the character to the left
+            player.GetComponent<PlayerControl3>().Flip();
+        }
     }
 
     void UpdateActiveSceneData()
     {
         Debug.Log($"^^^ 1 ^^^ SceneControl.UpdateActiveSceneData()");
+        previousSceneIndex = activeSceneIndex;
         // always use the current scene to update the indexer
         activeScene = SceneManager.GetActiveScene();
         activeSceneName = activeScene.name;
@@ -102,12 +177,7 @@ public class SceneControl : MonoBehaviour
         SceneManager.LoadScene(_name);
     }
 
-    /// <summary>When the active scene has changed (after OnSceneLoaded) (called from delegate)</summary>
-    void OnActiveSceneChanged(Scene previousActive, Scene newActive)
-    {
-        Debug.Log($"@@@ OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
-        UpdateActiveSceneData();
-    }
+
 
 
     ////////////////////////////////////////////////////// 

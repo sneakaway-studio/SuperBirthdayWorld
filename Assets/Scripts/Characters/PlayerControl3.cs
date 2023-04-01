@@ -150,7 +150,7 @@ public class PlayerControl3 : MonoBehaviour
         }
     }
 
-    void Flip()
+    public void Flip()
     {
         if ((rb.velocity.x > 0 && !facingRight) || (rb.velocity.x < 0 && facingRight))
         {
