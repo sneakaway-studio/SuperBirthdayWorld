@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 /**
  *  SceneControl ("Singleton" + "Service Locator" patterns)
@@ -14,9 +15,10 @@ using TMPro;
 
 public class SceneControl : MonoBehaviour
 {
-    // Singleton is accessible (public static)
+    // *** SINGLETON => make instance accessible outside of class
     public static SceneControl Instance { get; private set; }
-    public bool created = false;
+    // *** SINGLETON => only create once
+    public bool singletonCreated = false;
 
 
     [Header("Spawn Points")]
@@ -38,36 +40,46 @@ public class SceneControl : MonoBehaviour
 
     [Tooltip("Active scene")]
     Scene activeScene;
-    [Tooltip("Active scene index")]
+    [Tooltip("Active scene is loaded")]
     public bool activeSceneLoaded;
     [Tooltip("Active scene name")]
     public string activeSceneName;
     [Tooltip("Active scene index")]
     public int activeSceneIndex;
+    [Tooltip("Active scene level")]
+    public int activeSceneLevel;
+    [Tooltip("Active scene number")]
+    public string activeSceneNumber;
 
 
-    [Tooltip("Previous scene")]
+
+    [Header("Previous Scene")]
+
+    [Tooltip("Previous scene index")]
     public int previousSceneIndex;
+    [Tooltip("Previous scene level")]
+    public int previousSceneLevel;
 
 
     [Tooltip("Index of prev / current / next scenes")]
     public TMP_Text sceneDebugText;
 
 
-    // References to others ("Service Locator" pattern)
+    // @@@ SERVICE LOCATOR => References to class instances on child objects
     public MusicManager MusicManager { get; set; } // non-private set
     //public UIManager UIManager { get; private set; }
 
     private void Awake()
     {
-        // *** SINGLETON *** 
-        if (SceneControl.Instance != null && SceneControl.Instance.created)
+        // *** SINGLETON => If instance exists ...
+        if (SceneControl.Instance != null && SceneControl.Instance.singletonCreated)
         {
-            Debug.Log("Another SceneControl already exists!!!!");
+            //Debug.Log("Another SceneControl (Singleton) already exists; deleting child objects...");
             while (transform.childCount > 0)
             {
                 DestroyImmediate(transform.GetChild(0).gameObject);
             }
+            // *** SINGLETON => Then delete the object and exit
             DestroyImmediate(this.gameObject);
             return;
         }
@@ -76,19 +88,19 @@ public class SceneControl : MonoBehaviour
             Destroy(this);
             return;
         }
-        created = true;
+
+        // *** SINGLETON => Only reach this point on the first load...
+        Debug.Log($"*** SceneControl (Singleton) created");
+        singletonCreated = true;
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-
-        // *** SERVICE LOCATOR *** 
-        // store references
+        // @@@ SERVICE LOCATOR => Store references 
         MusicManager = GetComponentInChildren<MusicManager>();
         //UIManager = GetComponentInChildren<UIManager>();
 
-        // on first awake
+        // create scene list
         if (sceneList == null || sceneList.Count < 1) CreateSceneList();
-
     }
 
     void CreateSceneList()
@@ -100,31 +112,6 @@ public class SceneControl : MonoBehaviour
         indexer.Reset(sceneCount);
         sceneList = GetScenesInBuild();
         UpdateActiveSceneData();
-    }
-
-    /// <summary>When the active scene has changed (after OnSceneLoaded) (called from delegate)</summary>
-    void OnActiveSceneChanged(Scene previousActive, Scene newActive)
-    {
-        previousSceneIndex = previousActive.buildIndex;
-        Debug.Log($"^^^ 2 ^^^  OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
-
-        UpdateActiveSceneData();
-
-        // update player references
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        enterPoint = GameObject.Find("EnterPoint").transform;
-        exitPoint = GameObject.Find("ExitPoint").transform;
-        // move the player into the correct position        
-        if (previousSceneIndex <= activeSceneIndex)
-        {
-            player.position = enterPoint.position;
-        }
-        else
-        {
-            player.position = exitPoint.position;
-            // face the character to the left
-            player.GetComponent<PlayerControl3>().Flip();
-        }
     }
 
     void UpdateActiveSceneData()
@@ -142,6 +129,48 @@ public class SceneControl : MonoBehaviour
             $"next={sceneList[indexer.next]} ({indexer.next})";
     }
 
+    /// <summary>When the active scene has changed (after OnSceneLoaded) (called from delegate)</summary>
+    //void OnActiveSceneChanged(Scene previousActive, Scene newActive)
+    //Debug.Log($"^^^ 2 ^^^  SceneControl.OnActiveSceneChanged() previousActive.name='{previousActive.name}', newActive.name={newActive.name}");
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+
+        Debug.Log($"^^^ 2 ^^^  SceneControl.OnActiveSceneChanged() previousSceneIndex={previousSceneIndex} > scene.buildIndex={scene.buildIndex} scene.name={scene.name}");
+
+        // determines which door to move the player
+        //previousSceneIndex = previousActive.buildIndex;
+
+        UpdateActiveSceneData();
+
+        // determines which music theme to start
+        activeSceneNumber = scene.name.Replace("Scene-", "");
+        string[] words = activeSceneNumber.Split("-", System.StringSplitOptions.RemoveEmptyEntries);
+        int newActiveSceneLevel = Int32.Parse(words[0]);
+        if (newActiveSceneLevel != activeSceneLevel)
+        {
+            activeSceneLevel = newActiveSceneLevel;
+            EventManager.TriggerEvent("UpdateTheme");
+        }
+
+
+        // update player references
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        enterPoint = GameObject.Find("EnterPoint").transform;
+        exitPoint = GameObject.Find("ExitPoint").transform;
+        // move the player into the correct position        
+        if (previousSceneIndex <= activeSceneIndex)
+        {
+            player.position = enterPoint.position;
+        }
+        else
+        {
+            player.position = exitPoint.position;
+            // face the character to the left
+            player.GetComponent<PlayerControl3>().Flip();
+        }
+
+    }
+
 
 
     ////////////////////////////////////////////////////// 
@@ -152,14 +181,14 @@ public class SceneControl : MonoBehaviour
     // OnEnable / OnDisable listeners
     private void OnEnable()
     {
-        //SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.activeSceneChanged += OnActiveSceneChanged;
         //SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
     private void OnDisable()
     {
-        //SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.activeSceneChanged -= OnActiveSceneChanged;
         //SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
@@ -173,6 +202,9 @@ public class SceneControl : MonoBehaviour
     // by name
     public void LoadScene(string _name)
     {
+        previousSceneIndex = activeSceneIndex;
+        previousSceneLevel = activeSceneLevel;
+
         // also could use async version?
         SceneManager.LoadScene(_name);
     }

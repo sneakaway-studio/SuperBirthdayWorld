@@ -5,7 +5,9 @@ using UnityEngine.Audio;
 
 public class MusicManager : MonoBehaviour
 {
-
+    public AudioClip mainThemeClip;
+    public AudioClip dungeonThemeClip;
+    public AudioClip robotDystopiaClip;
     public AudioSource audioSource;
     public AudioMixer masterMixer;
     public AudioSource botAudioSource;
@@ -19,39 +21,66 @@ public class MusicManager : MonoBehaviour
     //public float volumeFaded = -20f;
     //public float volumeNormal = 1f;
 
+
+    private void OnEnable()
+    {
+        EventManager.StartListening("UpdateTheme", UpdateTheme);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("UpdateTheme", UpdateTheme);
+    }
+
+
     private void Awake()
     {
         audioSource.Play(0);
     }
 
-    private void Update()
+    void UpdateTheme()
     {
-        // if null getb bot
-        if (botAudioSource == null)
+
+        Debug.Log($"%%%%%  MusicManager.UpdateTheme() SceneControl.Instance.activeSceneLevel={SceneControl.Instance.activeSceneLevel}");
+
+        switch (SceneControl.Instance.activeSceneLevel)
         {
-            botAudioSource = GameObject.FindGameObjectWithTag("Bot").GetComponent<AudioSource>();
+            case 2:
+                StartCoroutine(SwapAudioClip(dungeonThemeClip));
+                break;
+            case 3:
+                StartCoroutine(SwapAudioClip(robotDystopiaClip));
+                break;
+            case 0:
+            case 1:
+            default:
+                StartCoroutine(SwapAudioClip(mainThemeClip));
+                break;
         }
 
-        // if audio playing, fade until
-        if (botAudioSource.isPlaying) FadeOut();
-        else FadeIn();
     }
 
-    void FadeIn()
+    private void Update()
     {
-        musicUp.TransitionTo(.1f);
+        // if null get bot
+        if (botAudioSource == null)
+            botAudioSource = GameObject.FindGameObjectWithTag("Bot").GetComponent<AudioSource>();
 
-
-        //if (audioSource.volume < volumeNormal)
-        //    audioSource.volume += fadeRate;
+        // if bot audio begins playing, transition to snapshot to turn volume down
+        if (botAudioSource.isPlaying)
+            musicDown.TransitionTo(.1f);
+        else
+            musicUp.TransitionTo(.1f);
     }
-    void FadeOut()
+
+    IEnumerator SwapAudioClip(AudioClip clip)
     {
-
-        musicDown.TransitionTo(.1f);
-
-        //if (audioSource.volume > volumeFaded)
-        //    audioSource.volume -= fadeRate;
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.Play(0);
+        yield return new WaitForSeconds(.1f);
     }
+
+
+
 
 }

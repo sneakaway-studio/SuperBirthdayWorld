@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40175e1626dcd4746b9d982a81cad91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  created: 0
+  singletonCreated: 0
   player: {fileID: 0}
   enterPoint: {fileID: 0}
   exitPoint: {fileID: 0}
@@ -127,11 +127,10 @@ MonoBehaviour:
     current: 0
     next: 0
     count: 0
-  activeScene:
-    m_Handle: 0
+  activeSceneLoaded: 0
   activeSceneName: 
   activeSceneIndex: 0
-  activeSceneLoaded: 0
+  activeSceneLevel: 0
   previousSceneIndex: 0
   sceneDebugText: {fileID: 2292432360839646962}
 --- !u!1 &3408785604934155183
@@ -367,6 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3248a4be3acb14ef78b15c93cd2c1a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainThemeClip: {fileID: 8300000, guid: 8f99ad7cc53784704a29c4f1af033b56, type: 3}
+  dungeonThemeClip: {fileID: 8300000, guid: 4fa39e294b40a499687828fcd448a49b, type: 3}
+  robotDystopiaClip: {fileID: 8300000, guid: 7fbed745722da433d9e8717e0efedaef, type: 3}
   audioSource: {fileID: 2431005941594708078}
   masterMixer: {fileID: 24100000, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
   botAudioSource: {fileID: 0}
