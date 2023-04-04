@@ -38,18 +38,20 @@ public class SceneControl : MonoBehaviour
 
     [Header("Current Scene")]
 
-    [Tooltip("Active scene")]
+    [Tooltip("Active scene")] // Scene
     Scene activeScene;
-    [Tooltip("Active scene is loaded")]
+    [Tooltip("Active scene is loaded")] // true
     public bool activeSceneLoaded;
-    [Tooltip("Active scene name")]
+    [Tooltip("Active scene name")] // "Scene-2-1"
     public string activeSceneName;
-    [Tooltip("Active scene index")]
+    [Tooltip("Active scene build index")] // 5
     public int activeSceneIndex;
-    [Tooltip("Active scene level")]
+    [Tooltip("Active scene level and number string")] // "2-1"
+    public string activeSceneLevelString;
+    [Tooltip("Active scene level")] // 2
     public int activeSceneLevel;
-    [Tooltip("Active scene number")]
-    public string activeSceneNumber;
+    [Tooltip("Active scene number in level")] // 1
+    public int activeSceneNumberInLevel;
 
 
 
@@ -143,9 +145,10 @@ public class SceneControl : MonoBehaviour
         UpdateActiveSceneData();
 
         // determines which music theme to start
-        activeSceneNumber = scene.name.Replace("Scene-", "");
-        string[] words = activeSceneNumber.Split("-", System.StringSplitOptions.RemoveEmptyEntries);
-        int newActiveSceneLevel = Int32.Parse(words[0]);
+        activeSceneLevelString = scene.name.Replace("Scene-", "");
+        string[] level = activeSceneLevelString.Split("-", System.StringSplitOptions.RemoveEmptyEntries);
+        int newActiveSceneLevel = Int32.Parse(level[0]);
+        activeSceneNumberInLevel = Int32.Parse(level[1]);
         if (newActiveSceneLevel != activeSceneLevel)
         {
             activeSceneLevel = newActiveSceneLevel;
@@ -156,18 +159,39 @@ public class SceneControl : MonoBehaviour
         // update player references
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enterPoint = GameObject.Find("EnterPoint").transform;
-        exitPoint = GameObject.Find("ExitPoint").transform;
-        // move the player into the correct position        
-        if (previousSceneIndex <= activeSceneIndex)
+
+
+        if (activeSceneLevel == 0)
         {
-            player.position = enterPoint.position;
+            // home has different exit points for each level
+            List<Transform> exitPoints = new List<Transform>();
+            exitPoints.Add(GameObject.Find("ExitPoint1").transform);
+            exitPoints.Add(GameObject.Find("ExitPoint2").transform);
+            exitPoints.Add(GameObject.Find("ExitPoint3").transform);
+            exitPoints.Add(GameObject.Find("ExitPoint4").transform);
+            player.position = exitPoints[previousSceneLevel - 1].position;
+            if (previousSceneLevel <= 2)
+                // face the character to the left
+                player.GetComponent<PlayerControl3>().Flip();
+
         }
         else
         {
-            player.position = exitPoint.position;
-            // face the character to the left
-            player.GetComponent<PlayerControl3>().Flip();
+            // only one exit point on all levels
+            exitPoint = GameObject.Find("ExitPoint").transform;
+            // move the player into the correct position     
+            if (previousSceneIndex <= activeSceneIndex)
+            {
+                player.position = enterPoint.position;
+            }
+            else
+            {
+                player.position = exitPoint.position;
+                // face the character to the left
+                player.GetComponent<PlayerControl3>().Flip();
+            }
         }
+
 
     }
 
@@ -202,10 +226,10 @@ public class SceneControl : MonoBehaviour
     // by name
     public void LoadScene(string _name)
     {
+        // save current active scene information
         previousSceneIndex = activeSceneIndex;
         previousSceneLevel = activeSceneLevel;
-
-        // also could use async version?
+        // then load scene (also could use async version?)
         SceneManager.LoadScene(_name);
     }
 
@@ -215,7 +239,6 @@ public class SceneControl : MonoBehaviour
     ////////////////////////////////////////////////////// 
     /////////////////// SCENE STATUS /////////////////////
     //////////////////////////////////////////////////////
-
 
     private List<string> GetScenesInBuild()
     {

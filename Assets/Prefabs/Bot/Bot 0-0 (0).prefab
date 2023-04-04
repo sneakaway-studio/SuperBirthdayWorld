@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3628052911112052202}
   - component: {fileID: 2781960369430695351}
   m_Layer: 6
-  m_Name: Bot (0)
+  m_Name: Bot 0-0 (0)
   m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -49763017310049364, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
-  m_audioClip: {fileID: 8300000, guid: eb34e796bd9f64746a03e63a824b53f4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 737a8590eafc1409aba21653734465e2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -557,7 +557,7 @@ SpriteRenderer:
   m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &3919701008066763195
