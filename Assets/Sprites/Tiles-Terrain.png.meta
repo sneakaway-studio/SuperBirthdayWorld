@@ -20,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -5615,11 +5615,11 @@ TextureImporter:
       Tiles-Terrain_156: 1576407113
       Tiles-Terrain_245: 1842475850
       Tiles-Terrain_237: -1762994196
+      Tiles-Terrain_206: 1571636131
       Tiles-Terrain_62: -1019048329
       Tiles-Terrain_107: -1837711368
       Tiles-Terrain_183: 1246631715
       Tiles-Terrain_187: -1277856742
-      Tiles-Terrain_206: 1571636131
       Tiles-Terrain_38: -2119310778
       Tiles-Terrain_238: 1712720339
       Tiles-Terrain_229: -1940984434
@@ -5652,15 +5652,15 @@ TextureImporter:
       Tiles-Terrain_84: 1367342071
       Tiles-Terrain_110: 323289405
       Tiles-Terrain_59: -207710543
-      Tiles-Terrain_90: 2027160436
       Tiles-Terrain_133: -1217788391
-      Tiles-Terrain_189: 938617214
       Tiles-Terrain_160: 396018395
+      Tiles-Terrain_189: 938617214
       Tiles-Terrain_224: 1185385633
       Tiles-Terrain_200: -344335635
       Tiles-Terrain_191: -1250003044
       Tiles-Terrain_27: 91828617
       Tiles-Terrain_185: 1783195681
+      Tiles-Terrain_90: 2027160436
       Tiles-Terrain_165: 1406001309
       Tiles-Terrain_91: -1313992861
       Tiles-Terrain_39: 1696120037

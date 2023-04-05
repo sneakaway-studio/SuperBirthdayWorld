@@ -20,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -5506,12 +5506,12 @@ TextureImporter:
       Tiles-Wallpaper_33: 276509213
       Tiles-Wallpaper_21: -391630619
       Tiles-Wallpaper_75: 553542808
-      Tiles-Wallpaper_43: 1663209450
+      Tiles-Wallpaper_225: -828081883
       Tiles-Wallpaper_198: 1965410254
       Tiles-Wallpaper_208: 1012830413
-      Tiles-Wallpaper_225: -828081883
       Tiles-Wallpaper_140: 1106952378
-      Tiles-Wallpaper_222: -669091241
+      Tiles-Wallpaper_112: -698859377
+      Tiles-Wallpaper_43: 1663209450
       Tiles-Wallpaper_50: -2047112824
       Tiles-Wallpaper_243: 2128767136
       Tiles-Wallpaper_11: -2022554280
@@ -5538,8 +5538,8 @@ TextureImporter:
       Tiles-Wallpaper_201: -2033028750
       Tiles-Wallpaper_203: 1280197315
       Tiles-Wallpaper_139: -958956954
-      Tiles-Wallpaper_1: 361611921
       Tiles-Wallpaper_86: 858367966
+      Tiles-Wallpaper_1: 361611921
       Tiles-Wallpaper_168: -266363720
       Tiles-Wallpaper_5: 1337731470
       Tiles-Wallpaper_40: -1123417083
@@ -5574,8 +5574,8 @@ TextureImporter:
       Tiles-Wallpaper_95: 457944774
       Tiles-Wallpaper_13: 830726891
       Tiles-Wallpaper_104: 111450747
-      Tiles-Wallpaper_127: 1251111289
       Tiles-Wallpaper_179: -2034006052
+      Tiles-Wallpaper_127: 1251111289
       Tiles-Wallpaper_6: -69574553
       Tiles-Wallpaper_205: -1252794807
       Tiles-Wallpaper_196: -803010465
@@ -5625,11 +5625,11 @@ TextureImporter:
       Tiles-Wallpaper_30: -2011140055
       Tiles-Wallpaper_45: -155594672
       Tiles-Wallpaper_133: 1700831741
-      Tiles-Wallpaper_151: -1103275838
       Tiles-Wallpaper_248: -1824603217
       Tiles-Wallpaper_71: 1379024969
       Tiles-Wallpaper_10: -1895550650
       Tiles-Wallpaper_187: 1479476969
+      Tiles-Wallpaper_151: -1103275838
       Tiles-Wallpaper_16: -68269993
       Tiles-Wallpaper_107: -1471800110
       Tiles-Wallpaper_52: -462081919
@@ -5753,12 +5753,12 @@ TextureImporter:
       Tiles-Wallpaper_85: 1937159736
       Tiles-Wallpaper_162: -57297543
       Tiles-Wallpaper_100: 594024507
-      Tiles-Wallpaper_135: -1395125479
       Tiles-Wallpaper_69: 983312679
-      Tiles-Wallpaper_141: 1196548979
-      Tiles-Wallpaper_66: 1504722060
       Tiles-Wallpaper_18: -1072409139
-      Tiles-Wallpaper_112: -698859377
+      Tiles-Wallpaper_66: 1504722060
+      Tiles-Wallpaper_135: -1395125479
+      Tiles-Wallpaper_222: -669091241
+      Tiles-Wallpaper_141: 1196548979
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

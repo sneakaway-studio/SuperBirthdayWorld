@@ -326,13 +326,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1804536854113964070}
-  - component: {fileID: 1804536854113964069}
   - component: {fileID: 1804536854113964058}
-  - component: {fileID: 5135440434308198157}
-  - component: {fileID: 9191053113282526013}
+  - component: {fileID: 1804536854113964069}
+  - component: {fileID: 4733294185732136255}
+  - component: {fileID: 4238284971295407624}
   m_Layer: 0
   m_Name: PlayerRig
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -356,22 +356,6 @@ Transform:
   m_Father: {fileID: 1804536853327948396}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1804536854113964069
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804536854113964056}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2739b420de2524e39b8d15db85dfb56f, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!95 &1804536854113964058
 Animator:
   serializedVersion: 4
@@ -392,8 +376,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!68 &5135440434308198157
-EdgeCollider2D:
+--- !u!58 &1804536854113964069
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -405,20 +389,11 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.34952736, y: -0.39281845}
-  - {x: -0.47170353, y: -0.24419904}
-  - {x: -0.5164714, y: -0.091095686}
-  - {x: -0.5331001, y: -0.013016224}
-  - {x: -0.49960995, y: 0.16347909}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!68 &9191053113282526013
-EdgeCollider2D:
+  m_Offset: {x: 0.09831172, y: -0.04617706}
+  serializedVersion: 2
+  m_Radius: 0.4121154
+--- !u!58 &4733294185732136255
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -430,15 +405,22 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.35807896, y: -0.38470078}
-  - {x: 0.48843575, y: -0.18788004}
-  - {x: 0.5138197, y: -0.058638334}
-  - {x: 0.522233, y: 0.019169807}
-  - {x: 0.4674821, y: 0.24554515}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_Offset: {x: -0.0938437, y: -0.05064535}
+  serializedVersion: 2
+  m_Radius: 0.41211557
+--- !u!70 &4238284971295407624
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804536854113964056}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 2739b420de2524e39b8d15db85dfb56f, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.004468441, y: 0.00000011920929}
+  m_Size: {x: 0.80089474, y: 1.0124156}
+  m_Direction: 0

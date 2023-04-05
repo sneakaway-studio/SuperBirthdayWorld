@@ -21,9 +21,10 @@ public class SceneControl : MonoBehaviour
     public bool singletonCreated = false;
 
 
-    [Header("Spawn Points")]
+    [Header("Scene-Specific")]
 
-    public Transform player;
+    public GameObject player;
+    public Rigidbody2D playerRb;
     public Transform enterPoint;
     public Transform exitPoint;
 
@@ -156,24 +157,23 @@ public class SceneControl : MonoBehaviour
         }
 
 
-        // update player references
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        enterPoint = GameObject.Find("EnterPoint").transform;
 
+
+        UpdateSceneReferences();
 
         if (activeSceneLevel == 0)
         {
             // home has different exit points for each level
             List<Transform> exitPoints = new List<Transform>();
             exitPoints.Add(GameObject.Find("ExitPoint1").transform);
+            exitPoints.Add(GameObject.Find("ExitPoint1").transform);
             exitPoints.Add(GameObject.Find("ExitPoint2").transform);
             exitPoints.Add(GameObject.Find("ExitPoint3").transform);
             exitPoints.Add(GameObject.Find("ExitPoint4").transform);
-            player.position = exitPoints[previousSceneLevel - 1].position;
+            playerRb.position = exitPoints[previousSceneLevel].position;
             if (previousSceneLevel <= 2)
                 // face the character to the left
-                player.GetComponent<PlayerControl3>().Flip();
-
+                playerRb.GetComponent<PlayerControl3>().Flip();
         }
         else
         {
@@ -182,17 +182,49 @@ public class SceneControl : MonoBehaviour
             // move the player into the correct position     
             if (previousSceneIndex <= activeSceneIndex)
             {
-                player.position = enterPoint.position;
+                playerRb.position = enterPoint.position;
             }
             else
             {
-                player.position = exitPoint.position;
+                playerRb.position = exitPoint.position;
                 // face the character to the left
-                player.GetComponent<PlayerControl3>().Flip();
+                playerRb.GetComponent<PlayerControl3>().Flip();
             }
         }
 
 
+    }
+
+
+    void UpdateSceneReferences()
+    {
+        if (player == null)
+        {
+            // NOTE: If using tags for collision checking etc. only add the tag to one GameObject in a scene.
+            // Do not add the tag to its children as well, or you will be getting references to the wrong gameobjects!
+            //Debug.LogError("No player found; getting reference");
+            player = GameObject.FindGameObjectWithTag("Player");
+            //Debug.LogError(player);
+        }
+        if (playerRb == null)
+        {
+            //Debug.LogError("No player rb2d found; getting reference");
+            playerRb = player.GetComponent<Rigidbody2D>();
+            //Debug.LogError(playerRb);
+        }
+        if (enterPoint == null)
+        {
+            //Debug.LogError("No enterPoint found; getting reference");
+            enterPoint = GameObject.Find("EnterPoint").transform;
+            //Debug.LogError(enterPoint);
+        }
+    }
+
+
+    private void Update()
+    {
+        // update player references
+        UpdateSceneReferences();
     }
 
 

@@ -55,12 +55,14 @@ public class SceneControl_Loader : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log(collision.transform.tag);
-        if (collision.transform.tag == "Player") Load(OnEvent.Collision);
+        // NOTE: If using tags for collision checking etc. only add the tag to one GameObject in a scene.
+        // Do not add the tag to its children as well, or you will be getting references to the wrong gameobjects!
+        if (collision.transform.parent.tag == "Player") Load(OnEvent.Collision);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.transform.tag);
-        if (collision.transform.tag == "Player") Load(OnEvent.Trigger);
+        if (collision.transform.parent.tag == "Player") Load(OnEvent.Trigger);
     }
 
 
