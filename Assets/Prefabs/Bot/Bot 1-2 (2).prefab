@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3254317613146623205, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
+      propertyPath: eyeRadius
+      value: 0.165
+      objectReference: {fileID: 0}
+    - target: {fileID: 3440341387675919152, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3440341387675919152, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.15
@@ -17,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052198, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_Name
-      value: Bot (2)
+      value: Bot 1-2 (2)
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_RootOrder
@@ -70,7 +78,7 @@ PrefabInstance:
     - target: {fileID: 3628052911112052200, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 8dd9c2d560b65479f890df17f4972898, type: 3}
+      objectReference: {fileID: 8300000, guid: eb34e796bd9f64746a03e63a824b53f4, type: 3}
     - target: {fileID: 3628052912282121059, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_IsActive
       value: 0

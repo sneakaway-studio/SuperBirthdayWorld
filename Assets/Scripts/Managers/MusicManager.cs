@@ -74,6 +74,7 @@ public class MusicManager : MonoBehaviour
 
     IEnumerator SwapAudioClip(AudioClip clip)
     {
+        if (audioSource.clip == clip) yield break;
         audioSource.Stop();
         audioSource.clip = clip;
         audioSource.Play(0);

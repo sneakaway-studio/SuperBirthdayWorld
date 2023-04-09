@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052198, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_Name
-      value: Bot (1)
+      value: Bot 1-1 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_RootOrder
@@ -74,7 +74,7 @@ PrefabInstance:
     - target: {fileID: 3628052911112052200, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: df5ece621dcd9480aadf2285fe6e6130, type: 3}
+      objectReference: {fileID: 8300000, guid: eb34e796bd9f64746a03e63a824b53f4, type: 3}
     - target: {fileID: 3628052911112052202, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_CollisionDetection
       value: 1

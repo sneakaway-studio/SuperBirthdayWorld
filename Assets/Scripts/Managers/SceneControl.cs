@@ -66,6 +66,7 @@ public class SceneControl : MonoBehaviour
 
     [Tooltip("Index of prev / current / next scenes")]
     public TMP_Text sceneDebugText;
+    public TeleType messageTextTeletyper;
 
 
     // @@@ SERVICE LOCATOR => References to class instances on child objects
@@ -173,7 +174,7 @@ public class SceneControl : MonoBehaviour
             playerRb.position = exitPoints[previousSceneLevel].position;
             if (previousSceneLevel <= 2)
                 // face the character to the left
-                playerRb.GetComponent<PlayerControl3>().Flip();
+                playerRb.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else
         {
@@ -188,7 +189,7 @@ public class SceneControl : MonoBehaviour
             {
                 playerRb.position = exitPoint.position;
                 // face the character to the left
-                playerRb.GetComponent<PlayerControl3>().Flip();
+                playerRb.transform.rotation = Quaternion.Euler(0, 180, 0);
             }
         }
 

@@ -23,7 +23,7 @@ public class PlayerControl3 : MonoBehaviour
 
     [Header("Components")]
     public Rigidbody2D rb;
-    //public Animator animator;
+    public Animator animator;
     public LayerMask groundLayer;
     public GameObject characterHolder;
 
@@ -60,10 +60,11 @@ public class PlayerControl3 : MonoBehaviour
         // check if jump key / button is held down
         jumpHold = Input.GetButton("Jump") || Input.GetKey(KeyCode.UpArrow);
 
-        //animator.SetBool("onGround", onGround);
+        animator.SetBool("onGround", onGround);
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
 
-        Flip();
+        FlipUsingInput();
+        //FlipUsingVelocity();
     }
 
     void FixedUpdate()
@@ -82,7 +83,8 @@ public class PlayerControl3 : MonoBehaviour
     void CheckIfGrounded()
     {
         wasOnGround = onGround;
-        onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) ||
+        onGround =
+            Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) ||
             Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
     }
 
@@ -102,7 +104,7 @@ public class PlayerControl3 : MonoBehaviour
         Vector2 targetVelocity = new Vector2(dir * maxSpeed, rb.velocity.y);
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref v0, 0.02f);
 
-        //animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
+        animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
         //animator.SetFloat("vertical", rb.velocity.y);
     }
 
@@ -150,12 +152,25 @@ public class PlayerControl3 : MonoBehaviour
         }
     }
 
-    public void Flip()
+    public void FlipUsingVelocity()
     {
         if ((rb.velocity.x > 0 && !facingRight) || (rb.velocity.x < 0 && facingRight))
         {
             facingRight = !facingRight;
             transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
+        }
+    }
+    public void FlipUsingInput()
+    {
+        if (direction.x > 0 && !facingRight)
+        {
+            facingRight = true;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (direction.x < 0 && facingRight)
+        {
+            facingRight = false;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 

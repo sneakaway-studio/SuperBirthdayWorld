@@ -61,3 +61,6 @@ TagManager:
   - name: Bots
     uniqueID: 955666743
     locked: 0
+  - name: Player
+    uniqueID: 2083697727
+    locked: 0

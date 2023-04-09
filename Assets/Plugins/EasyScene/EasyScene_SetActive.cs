@@ -24,9 +24,5 @@ public class EasyScene_SetActive : MonoBehaviour
     void OnEnable() => SetEnabled(OnEvent.Enable);
     void Start() => SetEnabled(OnEvent.Start);
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

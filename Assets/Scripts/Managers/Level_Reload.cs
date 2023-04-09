@@ -16,7 +16,7 @@ public class Level_Reload : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         print(collision.transform.tag);
-        if (collision.transform.tag == "Player")
+        if (collision.tag == "Player" || collision.transform.parent.tag == "Player")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
