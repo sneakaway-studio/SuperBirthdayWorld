@@ -62,7 +62,7 @@ MonoBehaviour:
   tmpText: {fileID: 4637027356450206467}
   backgroundPanelImage: {fileID: 2344682150759987758}
   nextButton: {fileID: 0}
-  timeBetweenCharacters: 4
+  timeBetweenCharacters: 0.02
   charactersTyped: 0
   charactersVisible: 0
   totalCharacters: 0

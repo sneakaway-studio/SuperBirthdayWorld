@@ -19,7 +19,7 @@ public class TeleType : MonoBehaviour
 
 
     [Tooltip("Typing speed")]
-    public float timeBetweenCharacters = 4f;
+    public float timeBetweenCharacters = .02f;
     [Tooltip("Number characters typed")]
     public int charactersTyped = 0;
 
@@ -110,7 +110,7 @@ public class TeleType : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(timeBetweenCharacters * Time.deltaTime);
+            yield return new WaitForSeconds(timeBetweenCharacters);
         }
 
         while (waitToRead > 0)

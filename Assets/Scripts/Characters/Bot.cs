@@ -49,7 +49,7 @@ public class Bot : MonoBehaviour
         messageDict["1-2"] = "The Joelle character updates are by our daughter, Sophia, and Joelle's brother, John created the music. ";
         messageDict["1-3"] = "With the basics finished, you are invited to record a message that will be played by one of the robots in the game. ";
         messageDict["1-4"] = "You can simply say 'Happy Birthday' or record a story or memory that you shared with her. ";
-        messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so I think we are safe, with your help! See instructions in the email to record a message. Thanks, Owen";
+        messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so feel free to lay it on :-)! See instructions in the email to record a message. Thanks, Owen";
     }
 
     private void Update()
