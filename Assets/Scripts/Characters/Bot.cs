@@ -55,7 +55,7 @@ public class Bot : MonoBehaviour
     private void Update()
     {
         // reset after audio finished
-        //if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying) OnEndMessage();
+        if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying) OnEndMessage();
 
         // show radio waves animation
         if (audioSource.isPlaying) radioWavesAnimation.SetActive(true);
@@ -70,14 +70,7 @@ public class Bot : MonoBehaviour
                 bodyFloat.floatingOn = messagePlaying;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log($"OnCollisionEnter2D() {collision.transform.tag}");
-        if (collision.transform.tag == "Player" || collision.transform.parent.tag == "Player")
-        {
-            OnShowMessage();
-        }
-    }
+    // OnTriggerEnter2D is in child obj
 
     void CheckDisplayTextMessage()
     {
@@ -103,7 +96,7 @@ public class Bot : MonoBehaviour
             StartCoroutine(MoveAndScaleObject(hat, hatShow, 2f, .5f));
             StartCoroutine(MoveAndScaleObject(wheel, wheelShow, 2f, .5f));
 
-            //PlayAudio();
+            PlayAudio();
             CheckDisplayTextMessage();
         }
     }
@@ -132,7 +125,7 @@ public class Bot : MonoBehaviour
 
     IEnumerator MoveAndScaleObject(Transform obj, Vector3 endPos, float endScale, float seconds)
     {
-        Debug.Log($"MoveAndScaleObject() {obj.name} {endPos} {endScale} {seconds}");
+        //Debug.Log($"MoveAndScaleObject() {obj.name} {endPos} {endScale} {seconds}");
         Vector3 startPos = obj.transform.localPosition;
         Vector3 startScale = obj.transform.localScale;
         Vector3 endScaleV = new Vector3((float)(obj.transform.localScale.x * endScale), (float)(obj.transform.localScale.y * endScale), 1);

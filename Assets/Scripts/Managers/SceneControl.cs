@@ -149,8 +149,16 @@ public class SceneControl : MonoBehaviour
         // determines which music theme to start
         activeSceneLevelString = scene.name.Replace("Scene-", "");
         string[] level = activeSceneLevelString.Split("-", System.StringSplitOptions.RemoveEmptyEntries);
-        int newActiveSceneLevel = Int32.Parse(level[0]);
-        activeSceneNumberInLevel = Int32.Parse(level[1]);
+
+        // default to zero (for test scenes)
+        int newActiveSceneLevel = 0;
+        activeSceneNumberInLevel = 0;
+        // unless data found
+        if (level.Length > 0)
+        {
+            Int32.TryParse(level[0], out newActiveSceneLevel);
+            Int32.TryParse(level[1], out activeSceneNumberInLevel);
+        }
         if (newActiveSceneLevel != activeSceneLevel)
         {
             activeSceneLevel = newActiveSceneLevel;

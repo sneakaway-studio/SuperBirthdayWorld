@@ -91,7 +91,7 @@ public class PlayerControl3 : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // if landed on ground
-        if (collision.transform.tag == "Ground")
+        if (collision.transform.CompareTag("Ground"))
             // and was just falling
             if (lastVelocity.y < -5)
                 // preserve momentum on impact

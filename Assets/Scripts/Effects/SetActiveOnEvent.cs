@@ -41,12 +41,12 @@ public class SetActiveOnEvent : MonoBehaviour
         //Debug.Log(collision.transform.tag);
         // NOTE: If using tags for collision checking etc. only add the tag to one GameObject in a scene.
         // Do not add the tag to its children as well, or you will be getting references to the wrong gameobjects!
-        if (collision.transform.parent.tag == "Player") SetEnabled(OnEvent.Collision);
+        if (collision.transform.parent.CompareTag("Player")) SetEnabled(OnEvent.Collision);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.transform.tag);
-        if (collision.transform.parent.tag == "Player") SetEnabled(OnEvent.Trigger);
+        if (collision.transform.parent.CompareTag("Player")) SetEnabled(OnEvent.Trigger);
     }
 
 
