@@ -63,7 +63,7 @@ public class TeleType : MonoBehaviour
         // if we are still writing / reading
         if (waitToRead > 0) yield break;
 
-        waitToRead = (int)newText.Length / 15;
+        waitToRead = (int)newText.Length / 25;
 
         // reset text object's allowed visible characters
         tmpText.maxVisibleCharacters = 0;
@@ -118,6 +118,8 @@ public class TeleType : MonoBehaviour
             yield return new WaitForSeconds(1f);
             waitToRead--;
         }
+
+        Debug.Log("CleanUpAfterTeleType");
 
         // remove text
         tmpText.text = "";

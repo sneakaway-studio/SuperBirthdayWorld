@@ -125,11 +125,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.82
+      value: 4.50009
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_LocalPosition.z
@@ -166,7 +166,7 @@ PrefabInstance:
     - target: {fileID: 3628052911112052200, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: eb34e796bd9f64746a03e63a824b53f4, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052202, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_GravityScale
       value: 1

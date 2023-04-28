@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 [RequireComponent(typeof(AudioSource))]
 public class Bot : MonoBehaviour
@@ -18,12 +20,15 @@ public class Bot : MonoBehaviour
 
     public Move_Float botFloat;
     public Move_Float bodyFloat;
-    [SerializeField] private AudioSource audioSource;
 
     public GameObject radioWavesAnimation;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private TextAsset textSource;
 
+    // game intro message
     public Dictionary<string, string> messageDict = new Dictionary<string, string>();
+
 
 
 
@@ -41,21 +46,17 @@ public class Bot : MonoBehaviour
 
     void Awake()
     {
-        OnEndMessage();
+        OnEndMessage(); // set bot to closed
 
-        // text messages
-        messageDict["0-0"] = "Joelle has a big birthday coming up and we wanted to do something memorable to celebrate it.";
-        messageDict["1-1"] = "In this simple 2D platformer Joelle plays herself to unlock recorded birthday messages from friends and family. ";
-        messageDict["1-2"] = "The Joelle character updates are by our daughter, Sophia, and Joelle's brother, John created the music. ";
-        messageDict["1-3"] = "With the basics finished, you are invited to record a message that will be played by one of the robots in the game. ";
-        messageDict["1-4"] = "You can simply say 'Happy Birthday' or record a story or memory that you shared with her. ";
-        messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so feel free to lay it on :-)! See instructions in the email to record a message. Thanks, Owen";
+        //PopulateGameIntroText();
     }
+
+
 
     private void Update()
     {
         // reset after audio finished
-        if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying) OnEndMessage();
+        if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying && !textSourcePlaying) OnEndMessage();
 
         // show radio waves animation
         if (audioSource.isPlaying) radioWavesAnimation.SetActive(true);
@@ -72,14 +73,13 @@ public class Bot : MonoBehaviour
 
     // OnTriggerEnter2D is in child obj
 
-    void CheckDisplayTextMessage()
-    {
-        string message = "";
-        if (messageDict.TryGetValue(SceneControl.Instance.activeSceneLevelString, out message))
-        {
-            SceneControl.Instance.messageTextTeletyper.AddText(message, this);
-        }
-    }
+
+
+
+
+
+    /////////////////////// TRIGGER ///////////////////////
+
 
     // startPos = the "hidden" position
     // endPos = the position in the editor before playing
@@ -96,8 +96,7 @@ public class Bot : MonoBehaviour
             StartCoroutine(MoveAndScaleObject(hat, hatShow, 2f, .5f));
             StartCoroutine(MoveAndScaleObject(wheel, wheelShow, 2f, .5f));
 
-            PlayAudio();
-            CheckDisplayTextMessage();
+            PlayMessage();
         }
     }
 
@@ -110,6 +109,11 @@ public class Bot : MonoBehaviour
         StartCoroutine(MoveAndScaleObject(hat, hatHide, .5f, .75f));
         StartCoroutine(MoveAndScaleObject(wheel, wheelHide, .5f, .75f));
     }
+
+
+
+    /////////////////////// ANIMATIONS ///////////////////////
+
 
     //IEnumerator MoveObject(Transform obj, Vector3 endPos, float seconds)
     //{
@@ -139,10 +143,27 @@ public class Bot : MonoBehaviour
         }
     }
 
+
+
+    /////////////////////// MESSAGES ///////////////////////
+
+    bool textSourcePlaying = false;
+
+    void PlayMessage()
+    {
+        if (textSource != null)
+        {
+            StartCoroutine(DisplayTextMessage());
+        }
+        // if the message is audio
+        else if (audioSource.clip != null) PlayAudio();
+    }
+
     void PlayAudio()
     {
         //Debug.Log(audioSource.time);
 
+        // if not already playing
         if (!audioSource.isPlaying)
         {
             audioSource.Play(0);
@@ -150,15 +171,47 @@ public class Bot : MonoBehaviour
             Debug.Log("Play: " + audioSource.time);
             radioWavesAnimation.SetActive(true);
         }
-        //else
-        //{
-        //    audioSource.Pause();
-        //    Debug.Log("Pause: " + audioSource.time);
-        //}
+    }
+
+    IEnumerator DisplayTextMessage()
+    {
+        // the introduction version
+        //string message = "";
+        //if (messageDict.TryGetValue(SceneControl.Instance.activeSceneLevelString, out message))
+        //    SceneControl.Instance.messageTextTeletyper.AddText(message, this);
+
+        if (textSourcePlaying) yield return null;
+        // so it can only be called once
+        textSourcePlaying = true;
+
+        // start the teletyper
+        SceneControl.Instance.messageTextTeletyper.AddText(textSource.text, this);
+
+        // and wait until it is done
+        while (textSourcePlaying)
+        {
+            Debug.Log("Waiting for end of text message");
+
+            yield return new WaitForSeconds(1);
+        }
     }
 
 
 
 
+
+
+
+
+
+    void PopulateGameIntroText()
+    {
+        messageDict["0-0"] = "Joelle has a big birthday coming up and we wanted to do something memorable to celebrate it.";
+        messageDict["1-1"] = "In this simple 2D platformer Joelle plays herself to unlock recorded birthday messages from friends and family. ";
+        messageDict["1-2"] = "The Joelle character updates are by our daughter, Sophia, and Joelle's brother, John created the music. ";
+        messageDict["1-3"] = "With the basics finished, you are invited to record a message that will be played by one of the robots in the game. ";
+        messageDict["1-4"] = "You can simply say 'Happy Birthday' or record a story or memory that you shared with her. ";
+        messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so feel free to lay it on :-)! See instructions in the email to record a message. Thanks, Owen";
+    }
 
 }
