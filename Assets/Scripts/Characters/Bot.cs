@@ -46,11 +46,20 @@ public class Bot : MonoBehaviour
 
     void Awake()
     {
-        OnEndMessage(); // set bot to closed
+        HideBot();
 
         //PopulateGameIntroText();
     }
 
+    // all bots should stop playing when one ends
+    private void OnEnable()
+    {
+        EventManager.StartListening("BotMessageEnd", OnEndMessage);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("BotMessageEnd", OnEndMessage);
+    }
 
 
     private void Update()
@@ -93,7 +102,7 @@ public class Bot : MonoBehaviour
 
             //StartCoroutine(MoveObject(hat, hatShow, .5f));
             //StartCoroutine(MoveObject(wheel, wheelShow, .5f));
-            StartCoroutine(MoveAndScaleObject(hat, hatShow, 2f, .5f));
+            StartCoroutine(ScaleAndSetActive(hat, 2f, true, .5f));
             StartCoroutine(MoveAndScaleObject(wheel, wheelShow, 2f, .5f));
 
             PlayMessage();
@@ -104,12 +113,21 @@ public class Bot : MonoBehaviour
     {
         messagePlaying = false;
 
-        //StartCoroutine(MoveObject(hat, hatHide, .75f));
-        //StartCoroutine(MoveObject(wheel, wheelHide, .75f));
-        StartCoroutine(MoveAndScaleObject(hat, hatHide, .5f, .75f));
-        StartCoroutine(MoveAndScaleObject(wheel, wheelHide, .5f, .75f));
+        //EventManager.TriggerEvent("BotMessageEnd");
+
+        HideBot();
+
+        // hide teletype if left open
+        SceneControl.Instance.messageTextTeletyper.OnEndMessage();
     }
 
+    public void HideBot()
+    {
+        //StartCoroutine(MoveObject(hat, hatHide, .75f));
+        //StartCoroutine(MoveObject(wheel, wheelHide, .75f));
+        StartCoroutine(ScaleAndSetActive(hat, .5f, false, .75f));
+        StartCoroutine(MoveAndScaleObject(wheel, wheelHide, .5f, .75f));
+    }
 
 
     /////////////////////// ANIMATIONS ///////////////////////
@@ -143,6 +161,20 @@ public class Bot : MonoBehaviour
         }
     }
 
+    IEnumerator ScaleAndSetActive(Transform obj, float endScale, bool active, float seconds)
+    {
+        //Debug.Log($"MoveAndScaleObject() {obj.name} {endPos} {endScale} {seconds}");
+        Vector3 startScale = obj.transform.localScale;
+        Vector3 endScaleV = new Vector3((float)(obj.transform.localScale.x * endScale), (float)(obj.transform.localScale.y * endScale), 1);
+        float t = 0f;
+        while (t <= 1.0)
+        {
+            t += Time.deltaTime / seconds;
+            obj.localScale = Vector3.Lerp(startScale, endScaleV, t);
+            yield return null;
+        }
+        obj.gameObject.SetActive(active);
+    }
 
 
     /////////////////////// MESSAGES ///////////////////////
@@ -168,8 +200,11 @@ public class Bot : MonoBehaviour
         {
             audioSource.Play(0);
             //audioSource.UnPause();
-            Debug.Log("Play: " + audioSource.time);
+            //Debug.Log("Play: " + audioSource.time);
+            // play animation
             radioWavesAnimation.SetActive(true);
+            // turn music down
+            EventManager.TriggerEvent("BotMessageStart");
         }
     }
 

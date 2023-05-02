@@ -104,7 +104,7 @@ public class TeleType : MonoBehaviour
             //Debug.Log("characterCount = " + m_textInfo.characterCount);
 
             // safety to prevent crash
-            if (++charactersTyped > 1000)
+            if (++charactersTyped > 5000)
             {
                 Debug.LogWarning("Safety first!");
                 yield break;
@@ -119,14 +119,18 @@ public class TeleType : MonoBehaviour
             waitToRead--;
         }
 
+        OnEndMessage();
+        // turn off bot (if still available)
+        if (bot != null) bot.OnEndMessage();
+    }
+
+    public void OnEndMessage()
+    {
         Debug.Log("CleanUpAfterTeleType");
 
         // remove text
         tmpText.text = "";
         // turn off background
         backgroundPanelImage.enabled = false;
-        // turn off bot (if still available)
-        if (bot != null) bot.OnEndMessage();
-
     }
 }

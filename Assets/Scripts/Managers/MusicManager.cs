@@ -25,10 +25,14 @@ public class MusicManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("UpdateTheme", UpdateTheme);
+        EventManager.StartListening("BotMessageStart", OnBotMessageStart);
+        EventManager.StartListening("BotMessageEnd", OnBotMessageEnd);
     }
     private void OnDisable()
     {
         EventManager.StopListening("UpdateTheme", UpdateTheme);
+        EventManager.StopListening("BotMessageStart", OnBotMessageStart);
+        EventManager.StopListening("BotMessageEnd", OnBotMessageEnd);
     }
 
 
@@ -39,15 +43,15 @@ public class MusicManager : MonoBehaviour
 
     void UpdateTheme()
     {
-
         Debug.Log($"%%%%%  MusicManager.UpdateTheme() SceneControl.Instance.activeSceneLevel={SceneControl.Instance.activeSceneLevel}");
 
         switch (SceneControl.Instance.activeSceneLevel)
         {
             case 2:
+            case 3:
                 StartCoroutine(SwapAudioClip(dungeonThemeClip));
                 break;
-            case 3:
+            case 4:
                 StartCoroutine(SwapAudioClip(robotDystopiaClip));
                 break;
             case 0:
@@ -57,19 +61,6 @@ public class MusicManager : MonoBehaviour
                 break;
         }
 
-    }
-
-    private void Update()
-    {
-        // if null get bot
-        if (botAudioSource == null)
-            botAudioSource = GameObject.FindGameObjectWithTag("Bot").GetComponent<AudioSource>();
-
-        // if bot audio begins playing, transition to snapshot to turn volume down
-        if (botAudioSource.isPlaying)
-            musicDown.TransitionTo(.1f);
-        else
-            musicUp.TransitionTo(.1f);
     }
 
     IEnumerator SwapAudioClip(AudioClip clip)
@@ -83,5 +74,16 @@ public class MusicManager : MonoBehaviour
 
 
 
+    void OnBotMessageStart()
+    {
+        //Debug.Log("BotMessageStart");
+        // if bot audio begins playing, transition to snapshot to turn volume down
+        musicDown.TransitionTo(.1f);
+    }
+    void OnBotMessageEnd()
+    {
+        //Debug.Log("BotMessageEnd");
+        musicUp.TransitionTo(.1f);
+    }
 
 }

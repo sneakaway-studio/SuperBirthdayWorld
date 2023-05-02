@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
 // Auto-rename Prefab instances (in Scene) when you change it (in Project)
@@ -16,7 +16,7 @@ public class PrefabNameUnifier : MonoBehaviour
     void OnEnable()
     {
         if (InPrefabIsolationMode()) return;
-        if (Application.isPlaying) return; 
+        if (Application.isPlaying) return;
 
         if (PrefabUtility.GetPrefabAssetType(gameObject) == PrefabAssetType.Regular || PrefabUtility.GetPrefabAssetType(gameObject) == PrefabAssetType.Variant)
         {
@@ -28,7 +28,6 @@ public class PrefabNameUnifier : MonoBehaviour
     {
         EditorApplication.update -= CheckForNameChange;
     }
-#endif
 
     void CheckForNameChange()
     {
@@ -41,7 +40,11 @@ public class PrefabNameUnifier : MonoBehaviour
 
     bool InPrefabIsolationMode()
     {
-        return EditorSceneManager.IsPreviewScene(SceneManager.GetActiveScene());
+        // "Get the current Prefab stage, or null if there is none"
+        // https://forum.unity.com/threads/detect-if-sceneview-is-currently-prefab-isolation-mode.621094/#post-4160581
+        bool currentPrefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+        //Debug.Log("InPrefabIsolationMode() currentPrefabStage = " + currentPrefabStage);
+        return currentPrefabStage;
     }
-
+#endif
 }

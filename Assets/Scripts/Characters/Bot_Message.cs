@@ -12,8 +12,8 @@ public class Bot_Message : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(bot.gameObject.name, bot.gameObject);
-        Debug.Log($"{bot.gameObject.tag}.OnTriggerEnter2D() collision.transform={collision.transform.tag}");
+        //Debug.Log(bot.gameObject.name, bot.gameObject);
+        //Debug.Log($"{bot.gameObject.tag}.OnTriggerEnter2D() collision.transform={collision.transform.tag}");
 
         if (collision.transform.CompareTag("Player"))
         {
