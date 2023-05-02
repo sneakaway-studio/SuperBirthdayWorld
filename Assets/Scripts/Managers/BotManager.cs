@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /**
  * 
@@ -11,9 +12,12 @@ using UnityEngine;
 public class BotManager : MonoBehaviour
 {
     // references
+    public TMP_Text botCountText;
+    public int botsTotal;
     public GameObject[] sceneBots;
     public GameObject[] sceneDoors;
     public List<GameObject> allTheBots = new List<GameObject>();
+    public List<string> foundBots = new List<string>();
 
 
     private void Awake()
@@ -32,6 +36,11 @@ public class BotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //botCountText.text = foundBots.Count.ToString() + " / " + botsTotal.ToString() + " bots";
     }
+
+
 }
+
+
+// https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
