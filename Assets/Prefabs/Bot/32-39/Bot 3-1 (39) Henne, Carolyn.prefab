@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052198, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_Name
-      value: Bot 1-4-xx (39)
+      value: Bot 3-1 (39) Henne, Carolyn
       objectReference: {fileID: 0}
     - target: {fileID: 3628052911112052199, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_RootOrder
@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3628052911112052200, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 63ac866084be642b4936ad24a2d7b006, type: 3}
     - target: {fileID: 3628052912282121059, guid: 99c8e8a0a3dbe46e99a491cea122a872, type: 3}
       propertyPath: m_IsActive
       value: 0

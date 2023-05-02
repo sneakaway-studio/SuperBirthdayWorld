@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 0}
-  doorEnabled: 0
+  doorEnabled: 1
   enabledColor: {r: 0, g: 0.8773585, b: 0, a: 0.4392157}
   disabledColor: {r: 1, g: 0.023584902, b: 0.8538612, a: 0.5176471}
 --- !u!50 &8311733392449739996
