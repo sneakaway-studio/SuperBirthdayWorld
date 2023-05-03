@@ -64,6 +64,9 @@ public class Bot : MonoBehaviour
 
     private void Update()
     {
+        //if (audioSource.time >= 0)
+        //    Debug.Log("PlayAudio() audioSource.time = " + audioSource.time);
+
         // reset after audio finished
         if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying && !textSourcePlaying) OnEndMessage();
 
@@ -113,7 +116,8 @@ public class Bot : MonoBehaviour
     {
         messagePlaying = false;
 
-        //EventManager.TriggerEvent("BotMessageEnd");
+        //EventManager.TriggerEvent("BotMessageEnd"); // creates a crash loop
+
 
         HideBot();
 
@@ -188,19 +192,22 @@ public class Bot : MonoBehaviour
             StartCoroutine(DisplayTextMessage());
         }
         // if the message is audio
-        else if (audioSource.clip != null) PlayAudio();
+        else if (audioSource.clip != null)
+        {
+            PlayAudio();
+        }
     }
 
     void PlayAudio()
     {
-        //Debug.Log(audioSource.time);
+        //Debug.Log("PlayAudio() audioSource.time = " + audioSource.time);
 
         // if not already playing
         if (!audioSource.isPlaying)
         {
             audioSource.Play(0);
             //audioSource.UnPause();
-            //Debug.Log("Play: " + audioSource.time);
+            //Debug.Log("PlayAudio() audioSource.time = " + audioSource.time);
             // play animation
             radioWavesAnimation.SetActive(true);
             // turn music down

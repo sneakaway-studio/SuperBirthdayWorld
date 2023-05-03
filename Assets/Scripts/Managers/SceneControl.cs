@@ -166,6 +166,10 @@ public class SceneControl : MonoBehaviour
         }
 
 
+        // stop any recordings
+        //EventManager.TriggerEvent("BotMessageEnd");
+        // hide teletype if left open
+        SceneControl.Instance.messageTextTeletyper.OnEndMessage();
 
 
         UpdateSceneReferences();
