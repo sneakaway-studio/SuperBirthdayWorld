@@ -27,6 +27,8 @@ public class SceneControl : MonoBehaviour
     public Rigidbody2D playerRb;
     public Transform enterPoint;
     public Transform exitPoint;
+    public GameObject currentBot;
+    public string currentBotName;
 
     [Header("Scene Data")]
 
@@ -166,11 +168,7 @@ public class SceneControl : MonoBehaviour
         }
 
 
-        // stop any recordings
-        //EventManager.TriggerEvent("BotMessageEnd");
-        // hide teletype if left open
-        SceneControl.Instance.messageTextTeletyper.OnEndMessage();
-
+        ResetBotAndMessage();
 
         UpdateSceneReferences();
 
@@ -276,8 +274,49 @@ public class SceneControl : MonoBehaviour
         previousSceneLevel = activeSceneLevel;
         // then load scene (also could use async version?)
         SceneManager.LoadScene(_name);
+        // turn it back up
+        MusicManager.TurnMusicUp();
     }
 
+
+
+
+    ////////////////////////////////////////////////////// 
+    /////////////////// BOT BUSINESS /////////////////////
+    //////////////////////////////////////////////////////
+
+    public void OnNewBotMessage(GameObject _bot)
+    {
+        if (currentBot != null)
+        {
+            currentBot.GetComponent<Bot>().OnEndMessageLocal();
+        }
+        currentBot = _bot;
+
+        MusicManager.TurnMusicDown();
+    }
+
+    // called from bot or teletype
+    public void OnEndBotMessage(GameObject _bot)
+    {
+        // if the same bot, then shut it all down
+        if (currentBot == _bot)
+        {
+            ResetBotAndMessage();
+            MusicManager.TurnMusicUp();
+        }
+        else
+        {
+            // ignore, let the new bot call this
+        }
+    }
+
+    void ResetBotAndMessage()
+    {
+        currentBot = null;
+        // hide teletype if left open
+        SceneControl.Instance.messageTextTeletyper.OnCancelTyping();
+    }
 
 
 

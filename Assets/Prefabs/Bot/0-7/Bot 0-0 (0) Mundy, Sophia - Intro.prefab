@@ -149,7 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messagePlaying: 0
+  textSourcePlaying: 0
   messageTimer: 0
+  playerDistance: 0
+  playerDistReset: 7
   hat: {fileID: 4294797233525563283}
   hatHide: {x: 0, y: 0, z: 0}
   hatShow: {x: 0, y: 0.776, z: 0}
@@ -1087,9 +1090,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.09}
   serializedVersion: 2
-  m_Radius: 0.64
+  m_Radius: 0.46
 --- !u!1 &8926424220630315717
 GameObject:
   m_ObjectHideFlags: 0

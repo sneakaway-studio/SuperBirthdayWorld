@@ -18,21 +18,20 @@ public class MusicManager : MonoBehaviour
     public AudioMixerSnapshot musicDown;
 
     public float fadeRate = .1f;
-    //public float volumeFaded = -20f;
-    //public float volumeNormal = 1f;
+    public bool volumeDown;
 
 
     private void OnEnable()
     {
         EventManager.StartListening("UpdateTheme", UpdateTheme);
-        EventManager.StartListening("BotMessageStart", OnBotMessageStart);
-        EventManager.StartListening("BotMessageEnd", OnBotMessageEnd);
+        EventManager.StartListening("TurnMusicDown", TurnMusicDown);
+        EventManager.StartListening("TurnMusicUp", TurnMusicUp);
     }
     private void OnDisable()
     {
         EventManager.StopListening("UpdateTheme", UpdateTheme);
-        EventManager.StopListening("BotMessageStart", OnBotMessageStart);
-        EventManager.StopListening("BotMessageEnd", OnBotMessageEnd);
+        EventManager.StopListening("TurnMusicDown", TurnMusicDown);
+        EventManager.StopListening("TurnMusicUp", TurnMusicUp);
     }
 
 
@@ -43,7 +42,7 @@ public class MusicManager : MonoBehaviour
 
     void UpdateTheme()
     {
-        Debug.Log($"%%%%%  MusicManager.UpdateTheme() SceneControl.Instance.activeSceneLevel={SceneControl.Instance.activeSceneLevel}");
+        Debug.Log($"MusicManager.UpdateTheme() SceneControl.Instance.activeSceneLevel={SceneControl.Instance.activeSceneLevel}");
 
         switch (SceneControl.Instance.activeSceneLevel)
         {
@@ -66,24 +65,25 @@ public class MusicManager : MonoBehaviour
     IEnumerator SwapAudioClip(AudioClip clip)
     {
         if (audioSource.clip == clip) yield break;
+        Debug.Log("MusicManager.SwapAudioClip() clip = " + clip.name);
         audioSource.Stop();
         audioSource.clip = clip;
         audioSource.Play(0);
         yield return new WaitForSeconds(.1f);
     }
 
-
-
-    void OnBotMessageStart()
+    public void TurnMusicDown()
     {
-        //Debug.Log("BotMessageStart");
+        Debug.Log("MusicManager.TurnMusicDown()");
         // if bot audio begins playing, transition to snapshot to turn volume down
         musicDown.TransitionTo(.1f);
+        volumeDown = true;
     }
-    void OnBotMessageEnd()
+    public void TurnMusicUp()
     {
-        //Debug.Log("BotMessageEnd");
+        Debug.Log("MusicManager.TurnMusicUp()");
         musicUp.TransitionTo(.1f);
+        volumeDown = false;
     }
 
 }

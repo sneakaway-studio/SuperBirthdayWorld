@@ -8,7 +8,11 @@ using System.Linq;
 public class Bot : MonoBehaviour
 {
     public bool messagePlaying;
+    public bool textSourcePlaying = false;
     public int messageTimer;
+
+    public float playerDistance;
+    public float playerDistReset = 3;
 
     public Transform hat;
     public Vector3 hatHide = new Vector3(0, 0, 0);
@@ -47,32 +51,28 @@ public class Bot : MonoBehaviour
     void Awake()
     {
         HideBot();
-
-        //PopulateGameIntroText();
     }
-
-    // all bots should stop playing when one ends
-    private void OnEnable()
-    {
-        EventManager.StartListening("BotMessageEnd", OnEndMessage);
-    }
-    private void OnDisable()
-    {
-        EventManager.StopListening("BotMessageEnd", OnEndMessage);
-    }
-
 
     private void Update()
     {
-        //if (audioSource.time >= 0)
-        //    Debug.Log("PlayAudio() audioSource.time = " + audioSource.time);
+        if (messagePlaying)
+        {
+            // update distance
+            playerDistance = Vector3.Distance(SceneControl.Instance.player.transform.position, transform.position);
+            // if too far away, reset
+            if (playerDistance > playerDistReset)
+                CancelMessage();
+        }
 
         // reset after audio finished
-        if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying && !textSourcePlaying) OnEndMessage();
+        if (messagePlaying && ++messageTimer > 100 && !audioSource.isPlaying && !textSourcePlaying)
+            OnEndMessage();
 
         // show radio waves animation
-        if (audioSource.isPlaying) radioWavesAnimation.SetActive(true);
-        else radioWavesAnimation.SetActive(false);
+        if (audioSource.isPlaying || textSourcePlaying)
+            radioWavesAnimation.SetActive(true);
+        else
+            radioWavesAnimation.SetActive(false);
 
         // check status of floating animation
         if (botFloat.enabled)
@@ -103,28 +103,52 @@ public class Bot : MonoBehaviour
             messagePlaying = true;
             messageTimer = 0;
 
-            //StartCoroutine(MoveObject(hat, hatShow, .5f));
-            //StartCoroutine(MoveObject(wheel, wheelShow, .5f));
-            StartCoroutine(ScaleAndSetActive(hat, 2f, true, .5f));
-            StartCoroutine(MoveAndScaleObject(wheel, wheelShow, 2f, .5f));
-
+            ShowBot();
             PlayMessage();
+            SceneControl.Instance.OnNewBotMessage(gameObject);
         }
+    }
+
+    public void CancelMessage()
+    {
+        Debug.Log($"{gameObject.name}.CancelMessage()");
+        OnEndMessage();
     }
 
     public void OnEndMessage()
     {
-        messagePlaying = false;
+        Debug.Log($"{gameObject.name}.OnEndMessage()");
 
-        //EventManager.TriggerEvent("BotMessageEnd"); // creates a crash loop
+        OnEndMessageLocal();
 
-
-        HideBot();
-
-        // hide teletype if left open
-        SceneControl.Instance.messageTextTeletyper.OnEndMessage();
+        // do global things
+        SceneControl.Instance.OnEndBotMessage(gameObject);
     }
 
+    public void OnEndMessageLocal()
+    {
+        Debug.Log($"{gameObject.name}.OnEndMessageLocal()");
+
+        // do local things
+        messagePlaying = false;
+        HideBot();
+        StopAudio();
+        StopTextMessage();
+        radioWavesAnimation.SetActive(false);
+    }
+
+
+
+
+    /////////////////////// ANIMATIONS ///////////////////////
+
+    public void ShowBot()
+    {
+        //StartCoroutine(MoveObject(hat, hatShow, .5f));
+        //StartCoroutine(MoveObject(wheel, wheelShow, .5f));
+        StartCoroutine(ScaleAndSetActive(hat, 2f, true, .5f));
+        StartCoroutine(MoveAndScaleObject(wheel, wheelShow, 2f, .5f));
+    }
     public void HideBot()
     {
         //StartCoroutine(MoveObject(hat, hatHide, .75f));
@@ -132,10 +156,6 @@ public class Bot : MonoBehaviour
         StartCoroutine(ScaleAndSetActive(hat, .5f, false, .75f));
         StartCoroutine(MoveAndScaleObject(wheel, wheelHide, .5f, .75f));
     }
-
-
-    /////////////////////// ANIMATIONS ///////////////////////
-
 
     //IEnumerator MoveObject(Transform obj, Vector3 endPos, float seconds)
     //{
@@ -183,13 +203,11 @@ public class Bot : MonoBehaviour
 
     /////////////////////// MESSAGES ///////////////////////
 
-    bool textSourcePlaying = false;
-
     void PlayMessage()
     {
         if (textSource != null)
         {
-            StartCoroutine(DisplayTextMessage());
+            StartCoroutine(PlayTextMessage());
         }
         // if the message is audio
         else if (audioSource.clip != null)
@@ -206,16 +224,18 @@ public class Bot : MonoBehaviour
         if (!audioSource.isPlaying)
         {
             audioSource.Play(0);
-            //audioSource.UnPause();
             //Debug.Log("PlayAudio() audioSource.time = " + audioSource.time);
             // play animation
             radioWavesAnimation.SetActive(true);
-            // turn music down
-            EventManager.TriggerEvent("BotMessageStart");
         }
     }
+    void StopAudio()
+    {
+        if (audioSource.isPlaying) audioSource.Stop();
 
-    IEnumerator DisplayTextMessage()
+    }
+
+    IEnumerator PlayTextMessage()
     {
         // the introduction version
         //string message = "";
@@ -228,32 +248,28 @@ public class Bot : MonoBehaviour
 
         // start the teletyper
         SceneControl.Instance.messageTextTeletyper.AddText(textSource.text, this);
-
-        // and wait until it is done
-        while (textSourcePlaying)
-        {
-            Debug.Log("Waiting for end of text message");
-
-            yield return new WaitForSeconds(1);
-        }
     }
 
-
-
-
-
-
-
-
-
-    void PopulateGameIntroText()
+    public void StopTextMessage()
     {
-        messageDict["0-0"] = "Joelle has a big birthday coming up and we wanted to do something memorable to celebrate it.";
-        messageDict["1-1"] = "In this simple 2D platformer Joelle plays herself to unlock recorded birthday messages from friends and family. ";
-        messageDict["1-2"] = "The Joelle character updates are by our daughter, Sophia, and Joelle's brother, John created the music. ";
-        messageDict["1-3"] = "With the basics finished, you are invited to record a message that will be played by one of the robots in the game. ";
-        messageDict["1-4"] = "You can simply say 'Happy Birthday' or record a story or memory that you shared with her. ";
-        messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so feel free to lay it on :-)! See instructions in the email to record a message. Thanks, Owen";
+        messagePlaying = false;
+        textSourcePlaying = false;
     }
+
+
+
+
+
+
+    // called from awake in original
+    //void PopulateGameIntroText()
+    //{
+    //    messageDict["0-0"] = "Joelle has a big birthday coming up and we wanted to do something memorable to celebrate it.";
+    //    messageDict["1-1"] = "In this simple 2D platformer Joelle plays herself to unlock recorded birthday messages from friends and family. ";
+    //    messageDict["1-2"] = "The Joelle character updates are by our daughter, Sophia, and Joelle's brother, John created the music. ";
+    //    messageDict["1-3"] = "With the basics finished, you are invited to record a message that will be played by one of the robots in the game. ";
+    //    messageDict["1-4"] = "You can simply say 'Happy Birthday' or record a story or memory that you shared with her. ";
+    //    messageDict["2-1"] = "She said the only thing I was allowed to do for her birthday was a sappy card, so feel free to lay it on :-)! See instructions in the email to record a message. Thanks, Owen";
+    //}
 
 }

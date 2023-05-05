@@ -28,6 +28,8 @@ public class TeleType : MonoBehaviour
     [Tooltip("Total characters of text object")]
     public int totalCharacters = 0;
 
+    public bool typing;
+
     public int waitToRead = 0;
 
 
@@ -48,20 +50,31 @@ public class TeleType : MonoBehaviour
     /// <param name="newText"></param>
     public void AddText(string newText, Bot bot)
     {
+        Debug.Log("TeleType.AddText() newText = " + newText);
+        typing = true;
         // start teletype function
-        StartCoroutine(StartTyping(newText, bot));
+        StartCoroutine(StartTyping(newText, bot, true));
         // find any objects needed
         nextButton = transform.Find("NextButton");
     }
 
-
-    IEnumerator StartTyping(string newText, Bot bot)
+    IEnumerator StartTyping(string newText, Bot bot, bool interrupt)
     {
         // if newText is empty
-        if (newText.Length <= 0) yield break;
+        if (newText.Length <= 0)
+        {
+            Debug.LogWarning("StartTyping() newText is empty");
+            OnCancelTyping();
+            yield break;
+        }
 
-        // if we are still writing / reading
-        if (waitToRead > 0) yield break;
+        // if we are still writing||reading and !interrupt
+        if (waitToRead > 0 && !interrupt)
+        {
+            Debug.LogWarning("Still waiting to read");
+            OnCancelTyping();
+            yield break;
+        }
 
         waitToRead = (int)newText.Length / 25;
 
@@ -72,12 +85,12 @@ public class TeleType : MonoBehaviour
         // add text
         tmpText.text = newText;
         //Debug.Log("characterCount = " + tmpText.textInfo.characterCount);
-        // turn on background
-        backgroundPanelImage.enabled = true;
+
+        ShowTeleType();
 
         bool addCharacters = true;
 
-        while (addCharacters)
+        while (typing && addCharacters)
         {
             // update characterCount (it takes a moment before this is actually accessible)
             totalCharacters = tmpText.textInfo.characterCount;
@@ -107,26 +120,43 @@ public class TeleType : MonoBehaviour
             if (++charactersTyped > 5000)
             {
                 Debug.LogWarning("Safety first!");
+                addCharacters = false;
+                OnCancelTyping();
                 yield break;
             }
 
             yield return new WaitForSeconds(timeBetweenCharacters);
         }
 
-        while (waitToRead > 0)
+        while (typing && waitToRead > 0)
         {
             yield return new WaitForSeconds(1f);
             waitToRead--;
         }
 
-        OnEndMessage();
+        OnCancelTyping();
+
         // turn off bot (if still available)
-        if (bot != null) bot.OnEndMessage();
+        if (bot != null)
+            SceneControl.Instance.OnEndBotMessage(bot.gameObject);
     }
 
-    public void OnEndMessage()
+    public void OnCancelTyping()
     {
-        Debug.Log("CleanUpAfterTeleType");
+        typing = false;
+        HideTeleType();
+    }
+
+
+    public void ShowTeleType()
+    {
+        // turn on background
+        backgroundPanelImage.enabled = true;
+    }
+
+    public void HideTeleType()
+    {
+        Debug.Log("HideTeleType()");
 
         // remove text
         tmpText.text = "";

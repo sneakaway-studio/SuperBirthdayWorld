@@ -302,10 +302,11 @@ MonoBehaviour:
   tmpText: {fileID: 4637027356450206467}
   backgroundPanelImage: {fileID: 2344682150759987758}
   nextButton: {fileID: 0}
-  timeBetweenCharacters: 0.02
+  timeBetweenCharacters: 0.03
   charactersTyped: 0
   charactersVisible: 0
   totalCharacters: 0
+  typing: 0
   waitToRead: 0
 --- !u!114 &4637027356450206467
 MonoBehaviour:
@@ -354,10 +355,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54
-  m_fontSizeBase: 54
+  m_fontSize: 40
+  m_fontSizeBase: 35
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 40
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -517,6 +518,8 @@ MonoBehaviour:
   playerRb: {fileID: 0}
   enterPoint: {fileID: 0}
   exitPoint: {fileID: 0}
+  currentBot: {fileID: 0}
+  currentBotName: 
   sceneCount: 0
   sceneList: []
   indexer:
@@ -1038,6 +1041,7 @@ MonoBehaviour:
   musicUp: {fileID: 24500006, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
   musicDown: {fileID: -1827443362714737086, guid: b6adbd80fdfad415484f143d3551f4f2, type: 2}
   fadeRate: 0.01
+  volumeDown: 0
 --- !u!82 &2431005941594708078
 AudioSource:
   m_ObjectHideFlags: 0
