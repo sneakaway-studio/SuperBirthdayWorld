@@ -72,13 +72,13 @@ public class SceneControl : MonoBehaviour
 
 
     // @@@ SERVICE LOCATOR => References to class instances on child objects
-    public MusicManager MusicManager { get; set; } // non-private set
+    public MusicManager MusicManager { get; set; } // public set
     //public UIManager UIManager { get; private set; }
 
     private void Awake()
     {
         // *** SINGLETON => If instance exists ...
-        if (SceneControl.Instance != null && SceneControl.Instance.singletonCreated)
+        if (Instance != null && Instance.singletonCreated)
         {
             //Debug.Log("Another SceneControl (Singleton) already exists; deleting child objects...");
             while (transform.childCount > 0)
