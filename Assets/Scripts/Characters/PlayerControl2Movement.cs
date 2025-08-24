@@ -39,7 +39,7 @@ public class PlayerControl2Movement : MonoBehaviour
     private void FixedUpdate()
     {
         //move the character left and right
-        rb2D.velocity = new Vector2(horizMovement * speed, rb2D.velocity.y);
+        rb2D.linearVelocity = new Vector2(horizMovement * speed, rb2D.linearVelocity.y);
         //myAnimator.SetFloat("speed", Mathf.Abs(horizMovement));
         Flip(horizMovement);
     }

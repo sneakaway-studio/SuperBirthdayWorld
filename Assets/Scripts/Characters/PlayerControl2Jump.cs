@@ -57,7 +57,7 @@ public class PlayerControl2Jump : MonoBehaviour
         if (Input.GetButtonDown("Jump") && grounded)
         {
             //jump!!!
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             stoppedJumping = false;
             //tell the animator to play jump anim
             //myAnimator.SetTrigger("jump");
@@ -67,7 +67,7 @@ public class PlayerControl2Jump : MonoBehaviour
         if (Input.GetButton("Jump") && !stoppedJumping && (jumpTimeCounter > 0))
         {
             //jump!!!
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpTimeCounter -= Time.deltaTime;
             //myAnimator.SetTrigger("jump");
         }
@@ -81,7 +81,7 @@ public class PlayerControl2Jump : MonoBehaviour
             //myAnimator.ResetTrigger("jump");
         }
 
-        if (rb.velocity.y < 0)
+        if (rb.linearVelocity.y < 0)
         {
             //myAnimator.SetBool("falling", true);
         }

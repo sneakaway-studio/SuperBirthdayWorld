@@ -70,7 +70,7 @@ public class PlayerControl3 : MonoBehaviour
     void FixedUpdate()
     {
         // get last velocity
-        lastVelocity = rb.velocity;
+        lastVelocity = rb.linearVelocity;
 
         Move(direction.x);
 
@@ -95,22 +95,22 @@ public class PlayerControl3 : MonoBehaviour
             // and was just falling
             if (lastVelocity.y < -5)
                 // preserve momentum on impact
-                rb.velocity = new Vector2(lastVelocity.x, rb.velocity.y);
+                rb.linearVelocity = new Vector2(lastVelocity.x, rb.linearVelocity.y);
     }
 
     void Move(float dir)
     {
         Vector3 v0 = Vector3.zero;
-        Vector2 targetVelocity = new Vector2(dir * maxSpeed, rb.velocity.y);
-        rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref v0, 0.02f);
+        Vector2 targetVelocity = new Vector2(dir * maxSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = Vector3.SmoothDamp(rb.linearVelocity, targetVelocity, ref v0, 0.02f);
 
-        animator.SetFloat("horizontal", Mathf.Abs(rb.velocity.x));
+        animator.SetFloat("horizontal", Mathf.Abs(rb.linearVelocity.x));
         //animator.SetFloat("vertical", rb.velocity.y);
     }
 
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
         rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
         jumpTimer = 0;
         jumpHold = false;
@@ -122,17 +122,17 @@ public class PlayerControl3 : MonoBehaviour
 
     void ModifyPhysics()
     {
-        bool changingDirections = (direction.x > 0 && rb.velocity.x < 0) || (direction.x < 0 && rb.velocity.x > 0);
+        bool changingDirections = (direction.x > 0 && rb.linearVelocity.x < 0) || (direction.x < 0 && rb.linearVelocity.x > 0);
 
         if (onGround)
         {
             if (Mathf.Abs(direction.x) < 0.4f || changingDirections)
             {
-                rb.drag = linearDrag;
+                rb.linearDamping = linearDrag;
             }
             else
             {
-                rb.drag = 0.1f;
+                rb.linearDamping = 0.1f;
             }
             rb.gravityScale = 0;
         }
@@ -140,12 +140,12 @@ public class PlayerControl3 : MonoBehaviour
         {
             // "better jump" 
             rb.gravityScale = gravity;
-            rb.drag = linearDrag * 0.15f;
-            if (rb.velocity.y < 0)
+            rb.linearDamping = linearDrag * 0.15f;
+            if (rb.linearVelocity.y < 0)
             {
                 rb.gravityScale = gravity * fallMultiplier;
             }
-            else if (rb.velocity.y > 0 && !jumpHold)
+            else if (rb.linearVelocity.y > 0 && !jumpHold)
             {
                 rb.gravityScale = gravity * (fallMultiplier / 2);
             }
@@ -154,7 +154,7 @@ public class PlayerControl3 : MonoBehaviour
 
     public void FlipUsingVelocity()
     {
-        if ((rb.velocity.x > 0 && !facingRight) || (rb.velocity.x < 0 && facingRight))
+        if ((rb.linearVelocity.x > 0 && !facingRight) || (rb.linearVelocity.x < 0 && facingRight))
         {
             facingRight = !facingRight;
             transform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
