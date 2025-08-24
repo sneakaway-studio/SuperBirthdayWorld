@@ -69,7 +69,7 @@ public class Platform_Moving : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            collision.transform.SetParent(null);
+            collision.transform.parent = null;
         }
     }
 
