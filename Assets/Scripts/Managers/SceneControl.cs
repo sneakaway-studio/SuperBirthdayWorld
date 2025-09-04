@@ -55,8 +55,8 @@ public class SceneControl : MonoBehaviour
     public int activeSceneLevel;
     [Tooltip("Active scene number in level")] // 1
     public int activeSceneNumberInLevel;
-
-
+    [Tooltip("Menu, Home, Credits, Test, etc.")]
+    public bool metaScene = false;
 
     [Header("Previous Scene")]
 
@@ -148,15 +148,19 @@ public class SceneControl : MonoBehaviour
 
         UpdateActiveSceneData();
 
+        // default to zero (for test scenes)
+        int newActiveSceneLevel = 0;
+        activeSceneNumberInLevel = 0;
+
+         metaScene = !scene.name.Contains("Scene-");
+
+
         // determines which music theme to start
         activeSceneLevelString = scene.name.Replace("Scene-", "");
         string[] level = activeSceneLevelString.Split("-", System.StringSplitOptions.RemoveEmptyEntries);
 
-        // default to zero (for test scenes)
-        int newActiveSceneLevel = 0;
-        activeSceneNumberInLevel = 0;
         // unless data found
-        if (level.Length > 0)
+        if (level.Length > 1)
         {
             Int32.TryParse(level[0], out newActiveSceneLevel);
             Int32.TryParse(level[1], out activeSceneNumberInLevel);
@@ -172,11 +176,10 @@ public class SceneControl : MonoBehaviour
 
         UpdateSceneReferences();
 
-        if (activeSceneLevel == 0)
+        if (scene.name.Contains("0-0"))
         {
             // home has different exit points for each level
             List<Transform> exitPoints = new List<Transform>();
-            exitPoints.Add(GameObject.Find("ExitPoint1").transform);
             exitPoints.Add(GameObject.Find("ExitPoint1").transform);
             exitPoints.Add(GameObject.Find("ExitPoint2").transform);
             exitPoints.Add(GameObject.Find("ExitPoint3").transform);
