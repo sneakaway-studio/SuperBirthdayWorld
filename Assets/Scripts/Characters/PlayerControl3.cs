@@ -33,15 +33,21 @@ public class PlayerControl3 : MonoBehaviour
     public float gravity = 1f;
     public float fallMultiplier = 5f;
     public float dragConstant = .9f;
+    public Vector2 previousVelocity;
 
     [Header("Collision")]
     public bool wasOnGround = false;
     public bool onGround = false;
-    public float groundLength = 0.6f;
-    public Vector3 colliderOffset = new Vector3(0.12f, 0, 0);
+    public Transform characterCenter; // center position of raycasts over animation
+    public Vector3 groundCheckRayRight;
+    public Vector3 groundCheckRayLeft;
+    [Tooltip("Length of ground check raycast")]
+    public float groundCheckRayLength = 1.76f;
+    [Tooltip("Offset two rays on horizontal axis")]
+    public Vector3 groundCheckRayOffset = new Vector3(0.16f, 0, 0);
 
 
-    public Vector2 lastVelocity;
+
 
     // Update is called once per frame
     void Update()
@@ -50,7 +56,7 @@ public class PlayerControl3 : MonoBehaviour
 
         // player just landed
         if (!wasOnGround && onGround)
-            // play land animation
+            // play land "squash"
             StartCoroutine(JumpSqueeze(1.25f, 0.8f, 0.05f));
 
         // check if jump key / button is pressed on this loop
@@ -70,7 +76,7 @@ public class PlayerControl3 : MonoBehaviour
     void FixedUpdate()
     {
         // get last velocity
-        lastVelocity = rb.linearVelocity;
+        previousVelocity = rb.linearVelocity;
 
         Move(direction.x);
 
@@ -83,9 +89,16 @@ public class PlayerControl3 : MonoBehaviour
     void CheckIfGrounded()
     {
         wasOnGround = onGround;
+
+        // offset them on horizontal
+        groundCheckRayRight = characterCenter.position + groundCheckRayOffset;
+        groundCheckRayLeft = characterCenter.position - groundCheckRayOffset;
+        // if either is true, allows player to stand on a ledge
+
+        // groundCheckRayLength = characterCenter.localScale.y;
         onGround =
-            Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) ||
-            Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
+            Physics2D.Raycast(groundCheckRayRight, Vector2.down, groundCheckRayLength, groundLayer) ||
+            Physics2D.Raycast(groundCheckRayLeft, Vector2.down, groundCheckRayLength, groundLayer);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -93,9 +106,9 @@ public class PlayerControl3 : MonoBehaviour
         // if landed on ground
         if (collision.transform.CompareTag("Ground"))
             // and was just falling
-            if (lastVelocity.y < -5)
-                // preserve momentum on impact
-                rb.linearVelocity = new Vector2(lastVelocity.x, rb.linearVelocity.y);
+            if (previousVelocity.y < -5)
+                // preserve X momentum on impact
+                rb.linearVelocity = new Vector2(previousVelocity.x, rb.linearVelocity.y);
     }
 
     void Move(float dir)
@@ -197,7 +210,7 @@ public class PlayerControl3 : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position + colliderOffset, transform.position + colliderOffset + Vector3.down * groundLength);
-        Gizmos.DrawLine(transform.position - colliderOffset, transform.position - colliderOffset + Vector3.down * groundLength);
+        Gizmos.DrawLine(groundCheckRayRight, groundCheckRayRight + Vector3.down * groundCheckRayLength);
+        Gizmos.DrawLine(groundCheckRayLeft, groundCheckRayLeft + Vector3.down * groundCheckRayLength);
     }
 }
