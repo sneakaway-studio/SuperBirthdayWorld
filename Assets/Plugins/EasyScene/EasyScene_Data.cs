@@ -13,7 +13,7 @@ public class EasyScene_Data
     public static string filePath = "Assets/Plugins/EasyScene/EasyScene_DataFile.json";
 
     private static EasyScene_SceneList _sceneList = new EasyScene_SceneList();
-    [SerializeField]
+    
     public static EasyScene_SceneList SceneList
     {
         get
