@@ -67,9 +67,13 @@ public class Platform_Moving : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        // exit also fires while the platform is being deactivated/unloaded (scene reload, stopping play mode),
+        // when Unity doesn't allow reparenting
+        if (!gameObject.activeInHierarchy) return;
+
         if (collision.transform.CompareTag("Player"))
         {
-            collision.transform.parent = null;
+            collision.transform.SetParent(null);
         }
     }
 
